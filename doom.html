@@ -8,8 +8,7 @@
   :root{ --neon-cyan:#00fff9; --neon-pink:#ff00ea; --neon-green:#39ff14; --bg:#0d0221; }
   *{box-sizing:border-box;}
   html,body{
-    margin:0; min-height:100%; background:
-      radial-gradient(ellipse at 50% 0%, #2b0a4d 0%, var(--bg) 60%);
+    margin:0; min-height:100%; background:var(--bg);
     display:flex; align-items:center; justify-content:center;
     font-family:"Courier New",monospace; padding:24px 0;
   }
@@ -19,59 +18,43 @@
     letter-spacing:4px; margin:0 0 14px; font-size:22px;
   }
 
-  /* --- retro CRT monitor --- */
-  .monitor{
-    width:660px; max-width:92vw; margin:0 auto;
-    background:linear-gradient(#e8e2d0,#c9c2ac);
-    border-radius:18px 18px 26px 26px;
-    padding:22px 22px 34px;
-    box-shadow:0 20px 50px rgba(0,0,0,.6), 0 0 40px var(--neon-pink);
-    position:relative;
+  .scene{
+    position:relative; width:900px; max-width:94vw; aspect-ratio:1600/900;
+    border-radius:10px; overflow:hidden;
+    box-shadow:0 20px 60px rgba(0,0,0,.7), 0 0 45px var(--neon-pink);
   }
-  .monitor::before{ /* brand strip */
-    content:"SONY  ·  Trinitron"; position:absolute; top:6px; left:50%; transform:translateX(-50%);
-    font-size:10px; letter-spacing:2px; color:#6b6555;
-  }
+  .scene img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; }
   .screen{
-    position:relative; background:#000; border-radius:10px;
-    box-shadow:inset 0 0 0 6px #1a1712, inset 0 0 40px 10px #000;
-    overflow:hidden; aspect-ratio:4/3;
+    position:absolute;
+    left:26.8%; top:8.8%; width:27%; height:38.5%;
+    background:#000; overflow:hidden;
   }
-  .screen iframe, .screen canvas{
-    position:absolute; inset:0; width:100%; height:100%; border:0; display:block;
-  }
+  .screen iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
   .crt-fx{
     position:absolute; inset:0; pointer-events:none; z-index:5;
     background:
-      repeating-linear-gradient(rgba(0,0,0,0) 0px, rgba(0,0,0,0) 2px, rgba(0,0,0,.18) 3px),
-      radial-gradient(ellipse at center, rgba(0,0,0,0) 55%, rgba(0,0,0,.55) 100%);
+      repeating-linear-gradient(rgba(0,0,0,0) 0px, rgba(0,0,0,0) 2px, rgba(0,0,0,.22) 3px),
+      radial-gradient(ellipse at center, rgba(0,0,0,0) 55%, rgba(0,0,0,.6) 100%);
   }
-  .led{
-    position:absolute; bottom:12px; right:24px; width:6px; height:6px; border-radius:50%;
-    background:var(--neon-green); box-shadow:0 0 6px var(--neon-green);
-  }
-  .stand{ width:120px; height:16px; background:#b8b2a0; margin:0 auto; border-radius:0 0 6px 6px; }
-  .base{ width:200px; height:10px; background:#a39d8c; margin:0 auto; border-radius:4px; }
 
-  #hint{ color:var(--neon-green); text-shadow:0 0 6px var(--neon-green); margin-top:14px; font-size:13px; letter-spacing:1px; }
+  #hint{ color:var(--neon-green); text-shadow:0 0 6px var(--neon-green); margin-top:16px; font-size:13px; letter-spacing:1px; }
   #credit{ color:#666; font-size:11px; margin-top:4px; }
+  #credit a{ color:#888; }
   a#back{ display:inline-block; margin-top:6px; color:var(--neon-cyan); text-decoration:none; font-size:12px; text-shadow:0 0 6px var(--neon-cyan); }
 </style>
 </head>
 <body>
 <div id="wrap">
   <h1>DOOM.EXE</h1>
-  <div class="monitor">
+  <div class="scene">
+    <img src="retro-desk.jpg" alt="Retro computer desk">
     <div class="screen">
       <iframe src="https://archive.org/embed/dosbox-doom" allowfullscreen></iframe>
       <div class="crt-fx"></div>
     </div>
-    <div class="led"></div>
   </div>
-  <div class="stand"></div>
-  <div class="base"></div>
   <div id="hint">CLICK THE SCREEN · ARROWS TO MOVE · CTRL TO SHOOT</div>
-  <div id="credit">DOOM shareware &copy; id Software · played via archive.org DOSBox</div>
+  <div id="credit">DOOM shareware &copy; id Software · played via archive.org DOSBox · desk photo by <a href="https://www.pexels.com/photo/vintage-general-computer-in-retro-setting-35378672/" target="_blank">Blackcurrant Great</a> on Pexels</div>
   <a id="back" href="https://github.com/andresazcona">&lt; back to github.com/andresazcona</a>
 </div>
 </body>
