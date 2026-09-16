@@ -6,19 +6,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
   *{box-sizing:border-box;}
-  html,body{ margin:0; width:100%; height:100%; background:#0d0221; overflow:hidden;
-    display:flex; align-items:center; justify-content:center; }
-  .scene{
-    position:relative;
-    width:min(100vw, calc(100vh * 1.6));
-    height:min(100vh, calc(100vw / 1.6));
-  }
+  html,body{ margin:0; width:100%; height:100%; background:#0d0221; overflow:hidden; }
+  .scene{ position:fixed; inset:0; }
   .scene img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; }
-  .screen{
-    position:absolute;
-    left:44.1%; top:22.8%; width:19.1%; height:26.7%;
-    background:#000; overflow:hidden;
-  }
+  .screen{ position:fixed; background:#000; overflow:hidden; }
   .screen iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
   .crt-fx{
     position:absolute; inset:0; pointer-events:none; z-index:5;
@@ -37,11 +28,30 @@
 <body>
 <div class="scene">
   <img src="retro-desk.jpg" alt="Retro computer desk">
-  <div class="screen">
-    <iframe src="https://archive.org/embed/dosbox-doom" allowfullscreen></iframe>
-    <div class="crt-fx"></div>
-  </div>
+</div>
+<div class="screen">
+  <iframe src="https://archive.org/embed/dosbox-doom" allowfullscreen></iframe>
+  <div class="crt-fx"></div>
 </div>
 <a id="credit" href="https://sketchfab.com/3d-models/macintosh-128k-896ea439b67b4606a23fb8b93be6af6d" target="_blank">3D: kreems (CC BY)</a>
+<script>
+  // pixel rect of the monitor screen within the 1600x1000 source photo
+  const IMG_W = 1600, IMG_H = 1000;
+  const SCREEN = { x: 705.6, y: 228, w: 305.6, h: 267 };
+  const screenEl = document.querySelector('.screen');
+
+  function layout(){
+    const cw = window.innerWidth, ch = window.innerHeight;
+    const scale = Math.max(cw / IMG_W, ch / IMG_H);
+    const offX = (cw - IMG_W * scale) / 2;
+    const offY = (ch - IMG_H * scale) / 2;
+    screenEl.style.left = (offX + SCREEN.x * scale) + 'px';
+    screenEl.style.top = (offY + SCREEN.y * scale) + 'px';
+    screenEl.style.width = (SCREEN.w * scale) + 'px';
+    screenEl.style.height = (SCREEN.h * scale) + 'px';
+  }
+  window.addEventListener('resize', layout);
+  layout();
+</script>
 </body>
 </html>
