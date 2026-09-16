@@ -5,47 +5,73 @@
 <title>DOOM.EXE — andresazcona</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-  :root{
-    --neon-cyan:#00fff9;
-    --neon-pink:#ff00ea;
-    --neon-green:#39ff14;
-    --bg:#0d0221;
-  }
+  :root{ --neon-cyan:#00fff9; --neon-pink:#ff00ea; --neon-green:#39ff14; --bg:#0d0221; }
   *{box-sizing:border-box;}
   html,body{
-    margin:0; min-height:100%; background:var(--bg);
+    margin:0; min-height:100%; background:
+      radial-gradient(ellipse at 50% 0%, #2b0a4d 0%, var(--bg) 60%);
     display:flex; align-items:center; justify-content:center;
-    font-family:"Courier New",monospace; padding:20px 0;
+    font-family:"Courier New",monospace; padding:24px 0;
   }
   #wrap{ text-align:center; }
   h1{
     color:var(--neon-pink); text-shadow:0 0 8px var(--neon-pink),0 0 20px var(--neon-cyan);
-    letter-spacing:4px; margin:0 0 8px; font-size:22px;
+    letter-spacing:4px; margin:0 0 14px; font-size:22px;
   }
-  .frame{
-    width:640px; max-width:92vw; aspect-ratio: 640 / 480;
-    background:#000;
-    border:2px solid var(--neon-pink);
-    box-shadow:0 0 20px var(--neon-pink),0 0 40px var(--neon-cyan) inset;
+
+  /* --- retro CRT monitor --- */
+  .monitor{
+    width:660px; max-width:92vw; margin:0 auto;
+    background:linear-gradient(#e8e2d0,#c9c2ac);
+    border-radius:18px 18px 26px 26px;
+    padding:22px 22px 34px;
+    box-shadow:0 20px 50px rgba(0,0,0,.6), 0 0 40px var(--neon-pink);
+    position:relative;
   }
-  iframe{ width:100%; height:100%; border:0; }
-  #hint{
-    color:var(--neon-green); text-shadow:0 0 6px var(--neon-green);
-    margin-top:8px; font-size:13px; letter-spacing:1px;
+  .monitor::before{ /* brand strip */
+    content:"SONY  ·  Trinitron"; position:absolute; top:6px; left:50%; transform:translateX(-50%);
+    font-size:10px; letter-spacing:2px; color:#6b6555;
   }
-  a#back{
-    display:inline-block; margin-top:10px; color:var(--neon-cyan);
-    text-decoration:none; font-size:12px; text-shadow:0 0 6px var(--neon-cyan);
+  .screen{
+    position:relative; background:#000; border-radius:10px;
+    box-shadow:inset 0 0 0 6px #1a1712, inset 0 0 40px 10px #000;
+    overflow:hidden; aspect-ratio:4/3;
   }
+  .screen iframe, .screen canvas{
+    position:absolute; inset:0; width:100%; height:100%; border:0; display:block;
+  }
+  .crt-fx{
+    position:absolute; inset:0; pointer-events:none; z-index:5;
+    background:
+      repeating-linear-gradient(rgba(0,0,0,0) 0px, rgba(0,0,0,0) 2px, rgba(0,0,0,.18) 3px),
+      radial-gradient(ellipse at center, rgba(0,0,0,0) 55%, rgba(0,0,0,.55) 100%);
+  }
+  .led{
+    position:absolute; bottom:12px; right:24px; width:6px; height:6px; border-radius:50%;
+    background:var(--neon-green); box-shadow:0 0 6px var(--neon-green);
+  }
+  .stand{ width:120px; height:16px; background:#b8b2a0; margin:0 auto; border-radius:0 0 6px 6px; }
+  .base{ width:200px; height:10px; background:#a39d8c; margin:0 auto; border-radius:4px; }
+
+  #hint{ color:var(--neon-green); text-shadow:0 0 6px var(--neon-green); margin-top:14px; font-size:13px; letter-spacing:1px; }
+  #credit{ color:#666; font-size:11px; margin-top:4px; }
+  a#back{ display:inline-block; margin-top:6px; color:var(--neon-cyan); text-decoration:none; font-size:12px; text-shadow:0 0 6px var(--neon-cyan); }
 </style>
 </head>
 <body>
 <div id="wrap">
   <h1>DOOM.EXE</h1>
-  <div class="frame">
-    <iframe src="https://archive.org/embed/dosbox-doom" allowfullscreen></iframe>
+  <div class="monitor">
+    <div class="screen">
+      <iframe src="https://archive.org/embed/dosbox-doom" allowfullscreen></iframe>
+      <div class="crt-fx"></div>
+    </div>
+    <div class="led"></div>
   </div>
-  <div id="hint">CLICK INSIDE THE SCREEN · ARROWS TO MOVE · CTRL TO SHOOT</div>
+  <div class="stand"></div>
+  <div class="base"></div>
+  <div id="hint">CLICK THE SCREEN · ARROWS TO MOVE · CTRL TO SHOOT</div>
+  <div id="credit">DOOM shareware &copy; id Software · played via archive.org DOSBox</div>
   <a id="back" href="https://github.com/andresazcona">&lt; back to github.com/andresazcona</a>
 </div>
 </body>
