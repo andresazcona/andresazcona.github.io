@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>DOOM.EXE — andresazcona</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{
+    --neon-cyan:#00fff9;
+    --neon-pink:#ff00ea;
+    --neon-green:#39ff14;
+    --bg:#0d0221;
+  }
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0; min-height:100%; background:var(--bg);
+    display:flex; align-items:center; justify-content:center;
+    font-family:"Courier New",monospace; padding:20px 0;
+  }
+  #wrap{ text-align:center; }
+  h1{
+    color:var(--neon-pink); text-shadow:0 0 8px var(--neon-pink),0 0 20px var(--neon-cyan);
+    letter-spacing:4px; margin:0 0 8px; font-size:22px;
+  }
+  .frame{
+    width:640px; max-width:92vw; aspect-ratio: 640 / 480;
+    background:#000;
+    border:2px solid var(--neon-pink);
+    box-shadow:0 0 20px var(--neon-pink),0 0 40px var(--neon-cyan) inset;
+  }
+  iframe{ width:100%; height:100%; border:0; }
+  #hint{
+    color:var(--neon-green); text-shadow:0 0 6px var(--neon-green);
+    margin-top:8px; font-size:13px; letter-spacing:1px;
+  }
+  a#back{
+    display:inline-block; margin-top:10px; color:var(--neon-cyan);
+    text-decoration:none; font-size:12px; text-shadow:0 0 6px var(--neon-cyan);
+  }
+</style>
+</head>
+<body>
+<div id="wrap">
+  <h1>DOOM.EXE</h1>
+  <div class="frame">
+    <iframe src="https://archive.org/embed/dosbox-doom" allowfullscreen></iframe>
+  </div>
+  <div id="hint">CLICK INSIDE THE SCREEN · ARROWS TO MOVE · CTRL TO SHOOT</div>
+  <a id="back" href="https://github.com/andresazcona">&lt; back to github.com/andresazcona</a>
+</div>
+</body>
+</html>
