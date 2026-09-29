@@ -345,7 +345,11 @@
     setTimeout(() => typeBoot(() => {
       boot.classList.add('off');
       splash.classList.add('on');
-      setTimeout(() => { splash.classList.remove('on'); setHud(null); hud.classList.add('on'); }, 2600);
+      setTimeout(() => {
+        splash.classList.remove('on'); setHud(null); hud.classList.add('on');
+        // opacity:0 alone left a ghost of the splash on some GPUs; drop the layers entirely
+        setTimeout(() => { splash.remove(); boot.remove(); }, 800);
+      }, 2600);
     }), 1400);
   }
   title.addEventListener('click', start);
