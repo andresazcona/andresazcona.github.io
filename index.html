@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>RETRO.EXE — andresazcona</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{ margin:0; width:100%; height:100%; background:#000; overflow:hidden; font-family:'Press Start 2P',monospace; }
+
+  /* the whole room lives in a 1600x1000 "world" we move like a camera */
+  #world{
+    position:absolute; left:0; top:0; width:1600px; height:1000px;
+    transform-origin:0 0;
+    transition: transform 3.2s cubic-bezier(.65,0,.3,1), filter 1.2s ease;
+  }
+  #world.dim{ filter: brightness(.3) blur(3px) saturate(.8); }
+  #world img{ position:absolute; inset:0; width:1600px; height:1000px; display:block; }
+
+  /* covers the whole teal glass of the render; rounded + glow so it reads as the CRT itself */
+  #screen{
+    position:absolute; left:729px; top:306px; width:231px; height:188px; background:#000; overflow:hidden;
+    border-radius:7px / 8px;
+    box-shadow: 0 0 6px 1px rgba(150,255,210,.28), 0 0 18px 4px rgba(120,255,200,.12);
+  }
+  /* the PC's display runs at 640x521 and is scaled into the 231px slot, so it stays sharp when zoomed */
+  .px{ position:absolute; left:0; top:0; width:640px; height:521px; transform-origin:0 0; transform:scale(.3609); }
+  .crt-fx{
+    position:absolute; inset:0; pointer-events:none; z-index:50;
+    border-radius:inherit;
+    background:
+      linear-gradient(155deg, rgba(255,255,255,.10) 0%, rgba(255,255,255,.03) 28%, rgba(255,255,255,0) 45%),
+      repeating-linear-gradient(rgba(0,0,0,0) 0px, rgba(0,0,0,0) 1px, rgba(0,0,0,.16) 1.5px),
+      radial-gradient(ellipse at center, rgba(0,0,0,0) 60%, rgba(0,0,0,.5) 100%);
+    box-shadow: inset 0 0 10px 3px rgba(0,0,0,.85), inset 0 0 2px 1px rgba(0,0,0,.9);
+  }
+
+  /* ---------- boot ---------- */
+  #boot{
+    z-index:40; background:#000; color:#b8b8b8;
+    padding:22px 20px; font:15px/1.9 Consolas,'Courier New',monospace; white-space:pre-wrap;
+    transition: opacity .6s ease;
+  }
+  .off{ opacity:0 !important; pointer-events:none !important; }
+  .cur{ display:inline-block; width:10px; height:16px; background:#b8b8b8; vertical-align:-2px; animation:blink 1s steps(1) infinite; }
+  #splash{
+    z-index:41; background:linear-gradient(#0b1f6b, #3a6fd8 55%, #bcd4ff);
+    display:flex; flex-direction:column; align-items:center; justify-content:center; color:#fff;
+    font-family:Tahoma,Verdana,sans-serif; opacity:0; transition: opacity .6s ease; pointer-events:none;
+  }
+  #splash.on{ opacity:1; }
+  #splash .logo{ display:grid; grid-template-columns:28px 28px; gap:4px; transform:skewY(-6deg); margin-bottom:18px; }
+  #splash .logo i{ height:24px; display:block; }
+  #splash b{ font-size:44px; letter-spacing:1px; text-shadow:2px 2px 0 #0008; }
+  #splash b span{ font-weight:400; font-style:italic; }
+  #splash .bar{ position:absolute; bottom:0; left:0; right:0; height:10px; overflow:hidden;
+    background:linear-gradient(90deg, #1b3fb5, #4d8bff, #9fd0ff, #4d8bff, #1b3fb5); background-size:200% 100%; animation:slide 1.2s linear infinite; }
+
+  /* ---------- desktop (Win9x style) ---------- */
+  #desk{
+    z-index:10; background:#008080; font:11px Tahoma,'MS Sans Serif',Verdana,sans-serif; color:#000;
+    user-select:none; cursor:default;
+  }
+  #icons{
+    position:absolute; left:8px; top:8px; bottom:36px; right:8px;
+    display:grid; grid-template-columns:repeat(6, 88px); align-content:start; gap:2px 12px;
+  }
+  .ico{ display:flex; flex-direction:column; align-items:center; padding:4px 2px; cursor:pointer; }
+  .ico .tile{
+    width:34px; height:34px; display:flex; align-items:center; justify-content:center;
+    font:bold 12px Consolas,monospace; color:#fff; text-shadow:1px 1px 0 #000;
+    border:1px solid #000; box-shadow: inset 1px 1px 0 #fff8, inset -1px -1px 0 #0006, 2px 2px 0 #0004;
+  }
+  .ico .lbl{ margin-top:4px; padding:1px 2px; color:#fff; text-align:center; line-height:1.2; }
+  .ico:hover .lbl, .ico:focus .lbl{ background:#000080; outline:1px dotted #ff0; }
+  .ico:hover .tile{ filter:brightness(1.2); }
+  .sect{ grid-column:1 / -1; color:#fff; font-weight:bold; padding:10px 2px 4px; border-bottom:1px solid #fff4; margin-bottom:4px; text-shadow:1px 1px 0 #0006; }
+
+  .bev{ background:#c0c0c0; box-shadow: inset -1px -1px 0 #000, inset 1px 1px 0 #fff, inset -2px -2px 0 #808080, inset 2px 2px 0 #dfdfdf; }
+  .bev-in{ box-shadow: inset 1px 1px 0 #808080, inset -1px -1px 0 #fff; }
+  #taskbar{ position:absolute; left:0; right:0; bottom:0; height:28px; display:flex; align-items:center; gap:4px; padding:2px; z-index:30; }
+  #taskbar button{ font:bold 11px Tahoma,sans-serif; height:22px; border:0; padding:0 8px; cursor:pointer; display:flex; align-items:center; gap:5px; }
+  #taskbar button:active, #taskbar button.down{ box-shadow: inset 1px 1px 0 #000, inset -1px -1px 0 #fff, inset 2px 2px 0 #808080; }
+  #startbtn i{ display:grid; grid-template-columns:6px 6px; gap:1px; transform:skewY(-6deg); }
+  #startbtn i b{ width:6px; height:5px; display:block; }
+  #task{ font-weight:400 !important; min-width:150px; justify-content:flex-start; }
+  #clock{ margin-left:auto; height:22px; padding:0 10px; display:flex; align-items:center; }
+
+  #startmenu{ position:absolute; left:2px; bottom:28px; width:210px; z-index:35; display:none; padding:2px 2px 2px 26px; }
+  #startmenu.open{ display:block; }
+  #startmenu .side{ position:absolute; left:2px; top:2px; bottom:2px; width:22px; background:linear-gradient(#000080,#1084d0);
+    color:#c0c0c0; font:bold 16px Tahoma,sans-serif; writing-mode:vertical-rl; transform:rotate(180deg); padding:6px 0; }
+  #startmenu .side span{ color:#fff; }
+  #startmenu .hd{ padding:4px 6px 2px; color:#808080; font-weight:bold; }
+  #startmenu .it{ padding:4px 6px; display:flex; align-items:center; gap:6px; cursor:pointer; }
+  #startmenu .it:hover{ background:#000080; color:#fff; }
+  #startmenu .it .tile, #task .tile{ width:16px; height:16px; font-size:7px; }
+
+  #win{ position:absolute; left:0; top:0; width:640px; height:493px; z-index:20; padding:3px; display:none; flex-direction:column; }
+  #win.open{ display:flex; }
+  #win .bar{ height:20px; display:flex; align-items:center; padding:0 2px 0 5px; gap:4px; color:#fff; font-weight:bold;
+    background:linear-gradient(90deg,#000080,#1084d0); }
+  #win .bar .t{ flex:1; white-space:nowrap; overflow:hidden; }
+  #win .bar button{ width:16px; height:14px; border:0; padding:0; font:bold 10px/1 Tahoma,sans-serif; cursor:pointer; }
+  #win .body{ position:relative; flex:1; margin-top:2px; background:#000; }
+  #win iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+  #loader{ position:absolute; inset:0; z-index:2; background:#008080; display:flex; align-items:center; justify-content:center; transition:opacity .5s; }
+  #loader .dlg{ width:300px; padding:3px; }
+  #loader .dlg .bar{ height:18px; }
+  #loader .dlg .in{ padding:14px 12px 12px; }
+  #loader .prog{ height:16px; margin-top:10px; padding:2px; background:#fff; }
+  #loader .prog i{ display:block; height:100%; width:0; background:repeating-linear-gradient(90deg,#000080 0 9px,transparent 9px 11px); }
+  #loader .hint{ margin-top:8px; color:#444; font-size:10px; }
+
+  /* ---------- title screen ---------- */
+  #title{
+    position:fixed; inset:0; z-index:100; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; color:#fff; cursor:pointer; padding:16px; transition: opacity .7s ease;
+  }
+  #title .pre{ font-size:11px; letter-spacing:4px; color:#ffb35c; margin-bottom:28px; }
+  #title h1{
+    margin:0; font-size:clamp(34px, 9vw, 96px); font-weight:400; letter-spacing:4px;
+    color:#ff3b1f; text-shadow: 4px 4px 0 #5a0a00, 0 0 28px #ff3b1f99;
+  }
+  #title .sub{ margin-top:22px; font-size:10px; letter-spacing:3px; color:#ff5fb0; line-height:2; }
+  #title .start{ margin-top:56px; font-size:14px; color:#ffe7a8; animation:blink 1.1s steps(1) infinite; }
+  #title .fine{ position:absolute; bottom:18px; left:0; right:0; font-size:8px; line-height:2; color:#fff6; padding:0 12px; }
+  #title .fine a{ color:inherit; }
+
+  /* ---------- controls panel ---------- */
+  #hud{
+    position:fixed; left:18px; bottom:18px; z-index:60; max-width:calc(100vw - 36px);
+    background:rgba(8,2,20,.8); border:2px solid #ff3b1f; box-shadow: 4px 4px 0 #5a0a00, 0 0 18px #ff3b1f44;
+    padding:14px 16px 12px; color:#ffe7a8; font-size:9px; line-height:1;
+    opacity:0; transform:translateY(12px); transition: opacity .6s ease, transform .6s ease; pointer-events:none;
+  }
+  #hud.on{ opacity:1; transform:none; pointer-events:auto; }
+  #hud h2{ margin:0 0 12px; font-size:10px; font-weight:400; color:#ff3b1f; letter-spacing:2px; }
+  #hud table{ border-collapse:collapse; }
+  #hud td{ padding:4px 0; }
+  #hud td:first-child{ color:#fff; padding-right:14px; white-space:nowrap; font:bold 12px Consolas,monospace; }
+  #hud .tip{ margin-top:10px; color:#ff5fb0; font-size:8px; line-height:1.6; }
+  #hud button{
+    margin-top:12px; font:inherit; font-size:8px; color:#000; background:#ffb35c; border:0; padding:7px 9px; cursor:pointer;
+    box-shadow: 2px 2px 0 #5a0a00;
+  }
+  #hud button:hover{ background:#ffe7a8; }
+
+  @keyframes blink{ 50%{ opacity:0; } }
+  @keyframes slide{ to{ background-position:-200% 0; } }
+  @keyframes fill{ to{ width:100%; } }
+  @media (max-width:640px){ #hud{ font-size:7px; left:10px; bottom:10px; padding:10px; } }
+</style>
+</head>
+<body>
+
+<div id="world" class="dim">
+  <img src="room-scene-hi.jpg" alt="Retro room">
+  <div id="screen">
+    <div id="desk" class="px">
+      <div id="icons"></div>
+      <div id="win" class="bev">
+        <div class="bar"><span class="t" id="wtitle"></span><button class="bev" id="wmax" title="Fullscreen">&#9633;</button><button class="bev" id="wclose" title="Close">&#10005;</button></div>
+        <div class="body" id="wbody">
+          <div id="loader">
+            <div class="dlg bev">
+              <div class="bar"><span class="t">Please wait</span></div>
+              <div class="in">
+                <div id="ltext">Loading...</div>
+                <div class="prog bev-in"><i id="lprog"></i></div>
+                <div class="hint">Click the game once it starts to use the keyboard.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="startmenu" class="bev"><div class="side">AZCONA<span>97</span></div><div id="smitems"></div></div>
+      <div id="taskbar" class="bev">
+        <button id="startbtn" class="bev"><i><b style="background:#ff3b1f"></b><b style="background:#ff5fb0"></b><b style="background:#00d9d0"></b><b style="background:#ffb35c"></b></i>Start</button>
+        <button id="task" class="bev" style="display:none"></button>
+        <div id="clock" class="bev-in"></div>
+      </div>
+    </div>
+    <div id="splash" class="px">
+      <div class="logo"><i style="background:#ff3b1f"></i><i style="background:#ff5fb0"></i><i style="background:#00d9d0"></i><i style="background:#ffb35c"></i></div>
+      <b>Azcona<span>97</span></b>
+      <div class="bar"></div>
+    </div>
+    <div id="boot" class="px"></div>
+    <div class="crt-fx"></div>
+  </div>
+</div>
+
+<div id="title">
+  <div class="pre">ANDRESAZCONA PRESENTS</div>
+  <h1>RETRO.EXE</h1>
+  <div class="sub">A LATE-NIGHT HOMAGE TO<br>THE GAMES THAT RAISED US</div>
+  <div class="start">PRESS ENTER OR CLICK TO START</div>
+  <div class="fine">
+    DOS GAMES: SHAREWARE / FREEWARE EDITIONS VIA INTERNET ARCHIVE &middot; ALL GAMES &copy; THEIR RESPECTIVE OWNERS<br>
+    HEXGL BY THIBAUT DESPOULAIN &middot; BANANABREAD (CUBE 2) BY MOZILLA &middot;
+    3D MAC: <a href="https://sketchfab.com/3d-models/macintosh-128k-896ea439b67b4606a23fb8b93be6af6d" target="_blank">KREEMS (CC BY)</a>
+  </div>
+</div>
+
+<div id="hud">
+  <h2 id="hudtitle">CONTROLS</h2>
+  <table id="hudkeys"></table>
+  <div class="tip" id="hudtip"></div>
+  <button id="view">[ LEAN BACK ]</button>
+</div>
+
+<script>
+  const AR = 'https://archive.org/embed/';
+  const FPS = [['&uarr; &darr;','MOVE'],['&larr; &rarr;','TURN'],['ALT+&larr;&rarr;','STRAFE'],['CTRL','FIRE'],['SPACE','USE / OPEN'],['SHIFT','RUN'],['1-7','WEAPONS'],['ESC','MENU']];
+  const GAMES = [
+    { sect:'DOS CLASSICS' },
+    { name:'DOOM',             tag:'DM', c:'#8b1a00', src:AR+'dosbox-doom', load:12000, keys:FPS },
+    { name:'Wolfenstein 3D',   tag:'W3', c:'#5b5b5b', src:AR+'Wolfenstein3d', load:10000, keys:FPS },
+    { name:'Heretic',          tag:'HR', c:'#3d6b2a', src:AR+'heretic-dos', load:12000, keys:[...FPS.slice(0,7),['[ ] ENTER','USE ITEM'],['ESC','MENU']] },
+    { name:'Commander Keen 4', tag:'CK', c:'#c0392b', src:AR+'msdos_Commander_Keen_4_-_Secret_of_the_Oracle_1991', load:10000,
+      keys:[['&larr; &rarr;','WALK'],['&uarr;','ENTER DOOR'],['CTRL','JUMP'],['ALT','POGO'],['SPACE','SHOOT'],['ESC','MENU']] },
+    { name:'Duke Nukem II',    tag:'D2', c:'#b8860b', src:AR+'duke-nukem2-sw', load:10000,
+      keys:[['&larr; &rarr;','WALK'],['&uarr; &darr;','AIM / USE'],['CTRL','JUMP'],['ALT','FIRE'],['ESC','MENU']] },
+    { name:'Raptor',           tag:'RP', c:'#1f4e8c', src:AR+'Raptor-sw1', load:10000,
+      keys:[['ARROWS','FLY'],['CTRL','FIRE'],['ESC','MENU']] },
+    { name:'One Must Fall 2097', tag:'OM', c:'#6b2a8b', src:AR+'msdos_One_Must_Fall_2097_1994', load:12000,
+      keys:[['ARROWS','MOVE / JUMP'],['ENTER','PUNCH'],['R-SHIFT','KICK'],['ESC','MENU']] },
+    { name:'Epic Pinball',     tag:'EP', c:'#d35400', src:AR+'Epic-pinball-sw1', load:10000,
+      keys:[['L-SHIFT','LEFT FLIPPER'],['R-SHIFT','RIGHT FLIPPER'],['SPACE','LAUNCH'],['ESC','MENU']] },
+    { sect:'3D' },
+    { name:'Quake',            tag:'QK', c:'#5a3a1a', src:AR+'msdos_Quake106_shareware', load:20000,
+      keys:[['&uarr; &darr;','MOVE'],['&larr; &rarr;','TURN'],['CTRL','FIRE'],['SPACE','JUMP'],['1-8','WEAPONS'],['ESC','MENU']] },
+    { name:'Magic Carpet',     tag:'MC', c:'#a0522d', src:AR+'MAGIC_20140815', load:30000,
+      keys:[['MOUSE','STEER'],['CLICK','CAST'],['ESC','MENU']] },
+    { name:'HexGL',            tag:'HX', c:'#e67e22', src:'https://hexgl.bkcore.com/play/', load:4000,
+      keys:[['&uarr;','ACCELERATE'],['&larr; &rarr;','STEER'],['A / D','AIR BRAKES']] },
+    { name:'Cube 2',           tag:'C2', c:'#2c3e50', src:'https://kripken.github.io/BananaBread/cube2/bb.html', load:8000,
+      keys:[['W A S D','MOVE'],['MOUSE','AIM'],['CLICK','FIRE'],['SPACE','JUMP']] },
+  ];
+
+  const $ = id => document.getElementById(id);
+  const world = $('world'), title = $('title'), hud = $('hud'), boot = $('boot'), splash = $('splash');
+  const win = $('win'), wbody = $('wbody'), loader = $('loader');
+  const tile = g => `<span class="tile" style="background:${g.c}">${g.tag}</span>`;
+
+  // desktop icons + start menu
+  $('icons').innerHTML = GAMES.map((g, i) => g.sect
+    ? `<div class="sect">${g.sect}</div>`
+    : `<div class="ico" tabindex="0" data-i="${i}">${tile(g)}<span class="lbl">${g.name}</span></div>`).join('');
+  $('smitems').innerHTML = GAMES.map((g, i) => g.sect
+    ? `<div class="hd">${g.sect}</div>`
+    : `<div class="it" data-i="${i}">${tile(g)}${g.name}</div>`).join('');
+  document.querySelectorAll('[data-i]').forEach(el => el.addEventListener('click', () => openGame(GAMES[el.dataset.i])));
+
+  // ---------- camera ----------
+  const W = 1600, H = 1000;
+  const VIEW = { pc: { x: 718, y: 296, w: 253, h: 208 } };   // glass + a hair of bezel, in world px
+  let mode = 'room', started = false;
+  function place(){
+    const cw = innerWidth, ch = innerHeight;
+    const cover = Math.max(cw / W, ch / H);
+    let s = cover, cx = W / 2, cy = H / 2;
+    if (mode === 'pc'){
+      const v = VIEW.pc;
+      s = Math.max(cover, Math.min(cw / v.w, ch / v.h) * 0.96);
+      cx = v.x + v.w / 2; cy = v.y + v.h / 2;
+    }
+    const tx = Math.min(0, Math.max(cw - W * s, cw / 2 - cx * s));
+    const ty = Math.min(0, Math.max(ch - H * s, ch / 2 - cy * s));
+    world.style.transform = `translate(${tx}px,${ty}px) scale(${s})`;
+  }
+  addEventListener('resize', () => { world.style.transition = 'none'; place(); world.offsetWidth; world.style.transition = ''; });
+  place();
+
+  // ---------- HUD ----------
+  function setHud(g){
+    $('hudtitle').textContent = g ? g.name.toUpperCase() : 'AZCONA 97';
+    $('hudkeys').innerHTML = (g ? g.keys : [['CLICK','OPEN A GAME'],['START','GAME MENU']])
+      .map(([k, a]) => `<tr><td>${k}</td><td>${a}</td></tr>`).join('');
+    $('hudtip').innerHTML = g ? 'CLICK THE GAME<br>TO GRAB THE KEYBOARD' : 'PICK A GAME FROM<br>THE DESKTOP';
+  }
+
+  // ---------- windows ----------
+  let loadTimer;
+  function openGame(g){
+    closeGame();
+    $('startmenu').classList.remove('open'); $('startbtn').classList.remove('down');
+    $('wtitle').textContent = g.name;
+    $('ltext').textContent = 'Loading ' + g.name + '...';
+    const bar = $('lprog'); bar.style.animation = 'none'; bar.offsetWidth; bar.style.animation = `fill ${g.load}ms linear forwards`;
+    loader.classList.remove('off');
+    const f = document.createElement('iframe');
+    f.src = g.src;
+    f.allow = 'autoplay; fullscreen; pointer-lock; gamepad';
+    f.allowFullscreen = true;
+    wbody.appendChild(f);
+    // ponytail: fixed per-game delay; the cross-origin frame can't tell us when it's ready
+    loadTimer = setTimeout(() => loader.classList.add('off'), g.load);
+    win.classList.add('open');
+    $('task').style.display = ''; $('task').innerHTML = tile(g) + g.name;
+    setHud(g);
+  }
+  function closeGame(){
+    clearTimeout(loadTimer);
+    wbody.querySelector('iframe')?.remove();
+    win.classList.remove('open');
+    $('task').style.display = 'none';
+    setHud(null);
+  }
+  $('wclose').addEventListener('click', closeGame);
+  $('wmax').addEventListener('click', () => wbody.querySelector('iframe')?.requestFullscreen?.());
+  $('startbtn').addEventListener('click', e => {
+    e.stopPropagation();
+    $('startmenu').classList.toggle('open'); $('startbtn').classList.toggle('down');
+  });
+  $('desk').addEventListener('click', e => {
+    if (!e.target.closest('#startmenu')){ $('startmenu').classList.remove('open'); $('startbtn').classList.remove('down'); }
+  });
+  (function tick(){
+    $('clock').textContent = new Date().toLocaleTimeString([], { hour:'numeric', minute:'2-digit' });
+    setTimeout(tick, 15000);
+  })();
+
+  // ---------- boot sequence ----------
+  const LINES = ['Starting AZCONA 97...', '', 'HIMEM is testing extended memory...done.', 'C:\\> WIN'];
+  function typeBoot(done){
+    let i = 0;
+    (function next(){
+      if (i >= LINES.length) return done();
+      boot.innerHTML = LINES.slice(0, ++i).join('\n') + '<span class="cur"></span>';
+      setTimeout(next, 450);
+    })();
+  }
+  function start(){
+    if (started) return;
+    started = true;
+    title.classList.add('off');
+    world.classList.remove('dim');
+    setTimeout(() => { mode = 'pc'; place(); }, 700);
+    setTimeout(() => typeBoot(() => {
+      boot.classList.add('off');
+      splash.classList.add('on');
+      setTimeout(() => { splash.classList.remove('on'); setHud(null); hud.classList.add('on'); }, 2600);
+    }), 1400);
+  }
+  title.addEventListener('click', start);
+  addEventListener('keydown', e => { if (!started && (e.key === 'Enter' || e.key === ' ')){ e.preventDefault(); start(); } });
+
+  $('view').addEventListener('click', () => {
+    mode = mode === 'pc' ? 'room' : 'pc';
+    $('view').textContent = mode === 'pc' ? '[ LEAN BACK ]' : '[ LEAN IN ]';
+    place();
+  });
+</script>
+</body>
+</html>
