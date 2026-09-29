@@ -19,12 +19,17 @@
   #world.dim{ filter: brightness(.3) blur(3px) saturate(.8); }
   #world img{ position:absolute; inset:0; width:1600px; height:1000px; display:block; }
 
-  #screen{ position:absolute; left:732px; top:309px; width:225px; height:182px; background:#000; overflow:hidden; }
-  /* game runs at 640px wide and is scaled into the 225px slot, so it stays sharp when we zoom in */
-  #tube{ position:absolute; left:0; top:0; width:640px; height:518px; transform-origin:0 0; transform:scale(.3516); }
-  #tube iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+  /* covers the whole teal glass of the render; rounded + glow so it reads as the CRT itself */
+  #screen{
+    position:absolute; left:729px; top:306px; width:231px; height:188px; background:#000; overflow:hidden;
+    border-radius:7px / 8px;
+    box-shadow: 0 0 6px 1px rgba(150,255,210,.28), 0 0 18px 4px rgba(120,255,200,.12);
+  }
+  /* game runs at 640px wide and is scaled into the 231px slot, so it stays sharp when we zoom in */
+  #tube{ position:absolute; left:0; top:0; width:640px; height:521px; transform-origin:0 0; transform:scale(.3609); }
+  #tube iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; filter: saturate(1.15) contrast(1.08) brightness(1.08); }
   #boot{
-    position:absolute; left:0; top:0; width:640px; height:518px; transform-origin:0 0; transform:scale(.3516);
+    position:absolute; left:0; top:0; width:640px; height:521px; transform-origin:0 0; transform:scale(.3609);
     z-index:4; background:#000; color:#b8b8b8;
     padding:22px 20px; font-size:15px; line-height:1.9; white-space:pre-wrap;
     transition: opacity .8s ease;
@@ -33,9 +38,12 @@
   #boot .cur{ display:inline-block; width:12px; height:16px; background:#b8b8b8; vertical-align:-2px; animation:blink 1s steps(1) infinite; }
   .crt-fx{
     position:absolute; inset:0; pointer-events:none; z-index:5;
+    border-radius:inherit;
     background:
-      repeating-linear-gradient(rgba(0,0,0,0) 0px, rgba(0,0,0,0) 1px, rgba(0,0,0,.22) 1.5px),
-      radial-gradient(ellipse at center, rgba(0,0,0,0) 55%, rgba(0,0,0,.6) 100%);
+      linear-gradient(155deg, rgba(255,255,255,.10) 0%, rgba(255,255,255,.03) 28%, rgba(255,255,255,0) 45%),
+      repeating-linear-gradient(rgba(0,0,0,0) 0px, rgba(0,0,0,0) 1px, rgba(0,0,0,.2) 1.5px),
+      radial-gradient(ellipse at center, rgba(0,0,0,0) 58%, rgba(0,0,0,.55) 100%);
+    box-shadow: inset 0 0 10px 3px rgba(0,0,0,.85), inset 0 0 2px 1px rgba(0,0,0,.9);
   }
 
   /* title screen */
@@ -169,21 +177,30 @@
     })();
   }
 
+  // the emulator starts downloading right away, hidden behind the (black) boot layer,
+  // so DOSBox's own loading screen never shows. We can't see inside the cross-origin
+  // iframe, so we just give it a head start.
+  // ponytail: fixed delay, a very slow connection may still catch the tail of the loader
+  const LOAD_MS = 15000;
+  const loadStart = Date.now();
+  const f = document.createElement('iframe');
+  f.src = 'https://archive.org/embed/dosbox-doom';
+  f.allow = 'autoplay; fullscreen';
+  document.getElementById('tube').appendChild(f);
+
+  function reveal(){
+    const wait = Math.max(600, LOAD_MS - (Date.now() - loadStart));
+    boot.innerHTML = LINES.join('\n') + '\n\nLoading, please wait...<span class="cur"></span>';
+    setTimeout(() => { boot.classList.add('off'); hud.classList.add('on'); }, wait);
+  }
+
   function start(){
     if (started) return;
     started = true;
     title.classList.add('off');
     world.classList.remove('dim');
-    // start loading the emulator behind the boot text
-    const f = document.createElement('iframe');
-    f.src = 'https://archive.org/embed/dosbox-doom';
-    f.allowFullscreen = true;
-    document.getElementById('tube').appendChild(f);
     setTimeout(() => { mode = 'pc'; place(); }, 700);
-    setTimeout(() => typeBoot(() => setTimeout(() => {
-      boot.classList.add('off');
-      hud.classList.add('on');
-    }, 900)), 1200);
+    setTimeout(() => typeBoot(reveal), 1200);
   }
 
   title.addEventListener('click', start);
