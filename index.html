@@ -176,7 +176,7 @@
           </div>
         </div>
       </div>
-      <div id="startmenu" class="bev"><div class="side">AZCONA<span>97</span></div><div id="smitems"></div></div>
+      <div id="startmenu" class="bev"><div class="side">OS<span> 97</span></div><div id="smitems"></div></div>
       <div id="taskbar" class="bev">
         <button id="startbtn" class="bev"><i><b style="background:#ff3b1f"></b><b style="background:#ff5fb0"></b><b style="background:#00d9d0"></b><b style="background:#ffb35c"></b></i>Start</button>
         <button id="task" class="bev" style="display:none"></button>
@@ -185,7 +185,7 @@
     </div>
     <div id="splash" class="px">
       <div class="logo"><i style="background:#ff3b1f"></i><i style="background:#ff5fb0"></i><i style="background:#00d9d0"></i><i style="background:#ffb35c"></i></div>
-      <b>Azcona<span>97</span></b>
+      <b>OS<span> 97</span></b>
       <div class="bar"></div>
     </div>
     <div id="boot" class="px"></div>
@@ -214,31 +214,33 @@
 
 <script>
   const AR = 'https://archive.org/embed/';
-  const FPS = [['&uarr; &darr;','MOVE'],['&larr; &rarr;','TURN'],['ALT+&larr;&rarr;','STRAFE'],['CTRL','FIRE'],['SPACE','USE / OPEN'],['SHIFT','RUN'],['1-7','WEAPONS'],['ESC','MENU']];
+  // archive.org's download servers send no CORS headers, so we can't watch the real download.
+  // ponytail: wait = emulator boot + game zip size at a slow ~250 KB/s (measured from archive.org)
+  const dl = mb => 9000 + mb * 4000;
+  // default keys checked against each game's source code or manual
   const GAMES = [
     { sect:'DOS CLASSICS' },
-    { name:'DOOM',             tag:'DM', c:'#8b1a00', src:AR+'dosbox-doom', load:12000, keys:FPS },
-    { name:'Wolfenstein 3D',   tag:'W3', c:'#5b5b5b', src:AR+'Wolfenstein3d', load:10000, keys:FPS },
-    { name:'Heretic',          tag:'HR', c:'#3d6b2a', src:AR+'heretic-dos', load:12000, keys:[...FPS.slice(0,7),['[ ] ENTER','USE ITEM'],['ESC','MENU']] },
-    { name:'Commander Keen 4', tag:'CK', c:'#c0392b', src:AR+'msdos_Commander_Keen_4_-_Secret_of_the_Oracle_1991', load:10000,
-      keys:[['&larr; &rarr;','WALK'],['&uarr;','ENTER DOOR'],['CTRL','JUMP'],['ALT','POGO'],['SPACE','SHOOT'],['ESC','MENU']] },
-    { name:'Duke Nukem II',    tag:'D2', c:'#b8860b', src:AR+'duke-nukem2-sw', load:10000,
-      keys:[['&larr; &rarr;','WALK'],['&uarr; &darr;','AIM / USE'],['CTRL','JUMP'],['ALT','FIRE'],['ESC','MENU']] },
-    { name:'Raptor',           tag:'RP', c:'#1f4e8c', src:AR+'Raptor-sw1', load:10000,
-      keys:[['ARROWS','FLY'],['CTRL','FIRE'],['ESC','MENU']] },
-    { name:'One Must Fall 2097', tag:'OM', c:'#6b2a8b', src:AR+'msdos_One_Must_Fall_2097_1994', load:12000,
-      keys:[['ARROWS','MOVE / JUMP'],['ENTER','PUNCH'],['R-SHIFT','KICK'],['ESC','MENU']] },
-    { name:'Epic Pinball',     tag:'EP', c:'#d35400', src:AR+'Epic-pinball-sw1', load:10000,
-      keys:[['L-SHIFT','LEFT FLIPPER'],['R-SHIFT','RIGHT FLIPPER'],['SPACE','LAUNCH'],['ESC','MENU']] },
+    { name:'DOOM',             tag:'DM', c:'#8b1a00', src:AR+'dosbox-doom', load:dl(2.4),
+      keys:[['&uarr; &darr;','MOVE'],['&larr; &rarr;','TURN'],['CTRL','FIRE'],['SPACE','USE / OPEN'],['SHIFT','RUN'],[', .','STRAFE'],['1-7','WEAPONS'],['ESC','MENU']] },
+    { name:'Wolfenstein 3D',   tag:'W3', c:'#5b5b5b', src:AR+'Wolfenstein3d', load:dl(0.7),
+      keys:[['&uarr; &darr;','MOVE'],['&larr; &rarr;','TURN'],['CTRL','FIRE'],['SPACE','OPEN'],['SHIFT','RUN'],['ALT+&larr;&rarr;','STRAFE'],['1-4','WEAPONS'],['ESC','MENU']] },
+    { name:'Heretic',          tag:'HR', c:'#3d6b2a', src:AR+'heretic-dos', load:dl(2.9),
+      keys:[['&uarr; &darr;','MOVE'],['&larr; &rarr;','TURN'],['CTRL','FIRE'],['SPACE','USE / OPEN'],['SHIFT','RUN'],['ALT+&larr;&rarr;','STRAFE'],['[ ]','PICK ITEM'],['ENTER','USE ITEM'],['ESC','MENU']] },
+    { name:'Commander Keen 4', tag:'CK', c:'#c0392b', src:AR+'msdos_Commander_Keen_4_-_Secret_of_the_Oracle_1991', load:dl(0.6),
+      keys:[['ARROWS','MOVE / LOOK'],['CTRL','JUMP'],['ALT','POGO'],['SPACE','SHOOT'],['ENTER','STATUS'],['ESC','MENU']] },
+    { name:'Duke Nukem II',    tag:'D2', c:'#b8860b', src:AR+'duke-nukem2-sw', load:dl(1.1),
+      keys:[['ARROWS','MOVE'],['CTRL','JUMP'],['ALT','FIRE'],['ESC','MENU']] },
+    { name:'Raptor',           tag:'RP', c:'#1f4e8c', src:AR+'Raptor-sw1', load:dl(1.9),
+      keys:[['ARROWS','FLY'],['CTRL','FIRE'],['ALT','SPECIAL WEAPON'],['SPACE','SWITCH SPECIAL'],['R-SHIFT','MEGA BOMB'],['ESC','MENU']] },
+    { name:'Epic Pinball',     tag:'EP', c:'#d35400', src:AR+'Epic-pinball-sw1', load:dl(0.7),
+      keys:[['L-SHIFT','LEFT FLIPPER'],['R-SHIFT','RIGHT FLIPPER'],['SPACE','HOLD + RELEASE: LAUNCH'],['Z  /','NUDGE'],['ESC','MENU']] },
     { sect:'3D' },
-    { name:'Quake',            tag:'QK', c:'#5a3a1a', src:AR+'msdos_Quake106_shareware', load:20000,
-      keys:[['&uarr; &darr;','MOVE'],['&larr; &rarr;','TURN'],['CTRL','FIRE'],['SPACE','JUMP'],['1-8','WEAPONS'],['ESC','MENU']] },
-    { name:'Magic Carpet',     tag:'MC', c:'#a0522d', src:AR+'MAGIC_20140815', load:30000,
-      keys:[['MOUSE','STEER'],['CLICK','CAST'],['ESC','MENU']] },
+    { name:'Magic Carpet',     tag:'MC', c:'#a0522d', src:AR+'MAGIC_20140815', load:dl(3.2) + 12000,
+      keys:[['MOUSE','STEER / ALTITUDE'],['&uarr;','FLY (TAP = FASTER)'],['&darr;','REVERSE'],['L / R-CLICK','CAST SPELLS'],['1-0','LEFT SPELL'],['ENTER','SPELLS'],['P','PAUSE']] },
     { name:'HexGL',            tag:'HX', c:'#e67e22', src:'https://hexgl.bkcore.com/play/', load:4000,
-      keys:[['&uarr;','ACCELERATE'],['&larr; &rarr;','STEER'],['A / D','AIR BRAKES']] },
+      keys:[['&uarr;','ACCELERATE'],['&darr;','BRAKE'],['&larr; &rarr;','STEER'],['A / Q','LEFT AIRBRAKE'],['D / E','RIGHT AIRBRAKE']] },
     { name:'Cube 2',           tag:'C2', c:'#2c3e50', src:'https://kripken.github.io/BananaBread/cube2/bb.html', load:8000,
-      keys:[['W A S D','MOVE'],['MOUSE','AIM'],['CLICK','FIRE'],['SPACE','JUMP']] },
+      keys:[['W A S D','MOVE'],['MOUSE','LOOK'],['L-CLICK','FIRE'],['SPACE','JUMP'],['1-5','WEAPONS'],['TAB','SCORES']] },
   ];
 
   const $ = id => document.getElementById(id);
@@ -277,7 +279,7 @@
 
   // ---------- HUD ----------
   function setHud(g){
-    $('hudtitle').textContent = g ? g.name.toUpperCase() : 'AZCONA 97';
+    $('hudtitle').textContent = g ? g.name.toUpperCase() : 'OS 97';
     $('hudkeys').innerHTML = (g ? g.keys : [['CLICK','OPEN A GAME'],['START','GAME MENU']])
       .map(([k, a]) => `<tr><td>${k}</td><td>${a}</td></tr>`).join('');
     $('hudtip').innerHTML = g ? 'CLICK THE GAME<br>TO GRAB THE KEYBOARD' : 'PICK A GAME FROM<br>THE DESKTOP';
@@ -325,7 +327,7 @@
   })();
 
   // ---------- boot sequence ----------
-  const LINES = ['Starting AZCONA 97...', '', 'HIMEM is testing extended memory...done.', 'C:\\> WIN'];
+  const LINES = ['Starting OS 97...', '', 'HIMEM is testing extended memory...done.', 'C:\\> WIN'];
   function typeBoot(done){
     let i = 0;
     (function next(){
