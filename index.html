@@ -200,6 +200,7 @@
   <div class="start">PRESS ENTER OR CLICK TO START</div>
   <div class="fine">
     DOS GAMES: SHAREWARE / FREEWARE EDITIONS VIA INTERNET ARCHIVE &middot; ALL GAMES &copy; THEIR RESPECTIVE OWNERS<br>
+    N64 ERA VIA ITCH.IO: SUPER CHUMPY (CAMPA T. DOG) &middot; JUMPY KART 64 &amp; PUMPKILL 64 (COSMIC RAYCAST) &middot; TOADALLY FLY (ELLIOTT DAHLE) &middot; RAT 64 (SYSL)<br>
     HEXGL BY THIBAUT DESPOULAIN &middot; BANANABREAD (CUBE 2) BY MOZILLA &middot;
     3D MAC: <a href="https://sketchfab.com/3d-models/macintosh-128k-896ea439b67b4606a23fb8b93be6af6d" target="_blank">KREEMS (CC BY)</a>
   </div>
@@ -214,6 +215,7 @@
 
 <script>
   const AR = 'https://archive.org/embed/';
+  const IT = 'https://itch.io/embed-upload/';
   // archive.org's download servers send no CORS headers, so we can't watch the real download.
   // ponytail: wait = emulator boot + game zip size at a slow ~250 KB/s (measured from archive.org)
   const dl = mb => 9000 + mb * 4000;
@@ -234,6 +236,18 @@
       keys:[['ARROWS','FLY'],['CTRL','FIRE'],['ALT','SPECIAL WEAPON'],['SPACE','SWITCH SPECIAL'],['R-SHIFT','MEGA BOMB'],['ESC','MENU']] },
     { name:'Epic Pinball',     tag:'EP', c:'#d35400', src:AR+'Epic-pinball-sw1', load:dl(0.7),
       keys:[['L-SHIFT','LEFT FLIPPER'],['R-SHIFT','RIGHT FLIPPER'],['SPACE','HOLD + RELEASE: LAUNCH'],['Z  /','NUDGE'],['ESC','MENU']] },
+    // original indie games from itch.io, embedded with the authors' own embed builds (itch shows its own loader)
+    { sect:'N64 ERA' },
+    { name:'Super Chumpy',     tag:'SC', c:'#c8641e', src:IT+'16630476', load:1200,
+      keys:[['W A S D','MOVE'],['SPACE','JUMP (x3)'],['SHIFT','RUN'],['F','INSPECT'],['MOUSE / IJKL','CAMERA']] },
+    { name:'Jumpy Kart 64',    tag:'JK', c:'#d62b2b', src:IT+'7496594', load:1200,
+      keys:[['ENTER','START'],['W A S D','DRIVE'],['SPACE','JUMP (x2)'],['SHIFT','HANDBRAKE / SPIN'],['F','ATTACK'],['ARROWS','CAMERA']] },
+    { name:'PUMPKILL 64',      tag:'PK', c:'#e8742a', src:IT+'8982789', load:1200,
+      keys:[['W A S D','MOVE'],['MOUSE','AIM'],['L-CLICK','FIRE'],['SPACE','JUMP'],['SHIFT','RUN'],['CTRL / C','CROUCH / SLIDE']] },
+    { name:'Toadally Fly',     tag:'TF', c:'#3aa04a', src:IT+'5742947', load:1200,
+      keys:[['W A S D','MOVE'],['MOUSE','LOOK'],['SPACE','JUMP (x2)'],['L-CLICK','TONGUE'],['SHIFT','SPRINT']] },
+    { name:'Rat 64',           tag:'R6', c:'#7a5cc4', src:IT+'16886315', load:1200,
+      keys:[['W A S D','MOVE'],['MOUSE','CAMERA'],['SPACE','JUMP'],['SHIFT','RUN'],['E','FOCUS CAMERA']] },
     { sect:'3D' },
     { name:'Magic Carpet',     tag:'MC', c:'#a0522d', src:AR+'MAGIC_20140815', load:dl(3.2) + 12000,
       keys:[['MOUSE','STEER / ALTITUDE'],['&uarr;','FLY (TAP = FASTER)'],['&darr;','REVERSE'],['L / R-CLICK','CAST SPELLS'],['1-0','LEFT SPELL'],['ENTER','SPELLS'],['P','PAUSE']] },
