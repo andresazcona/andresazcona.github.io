@@ -104,7 +104,7 @@
     background:linear-gradient(90deg,#000080,#1084d0); }
   #win .bar .t{ flex:1; white-space:nowrap; overflow:hidden; }
   #win .bar button{ width:16px; height:14px; border:0; padding:0; font:bold 10px/1 Tahoma,sans-serif; cursor:pointer; }
-  #win .body{ position:relative; flex:1; margin-top:2px; background:#000; }
+  #win .body{ position:relative; flex:1; margin-top:2px; background:#000; overflow:hidden; }
   #win iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
   #loader{ position:absolute; inset:0; z-index:2; background:#008080; display:flex; align-items:center; justify-content:center; transition:opacity .5s; }
   #loader .dlg{ width:300px; padding:3px; }
@@ -254,6 +254,8 @@
     { name:'HexGL',            tag:'HX', c:'#e67e22', src:'https://hexgl.bkcore.com/play/', load:4000,
       keys:[['&uarr;','ACCELERATE'],['&darr;','BRAKE'],['&larr; &rarr;','STEER'],['A / Q','LEFT AIRBRAKE'],['D / E','RIGHT AIRBRAKE']] },
     { name:'Cube 2',           tag:'C2', c:'#2c3e50', src:'https://kripken.github.io/BananaBread/cube2/bb.html', load:8000,
+      // show only the game canvas: the page is laid out centered, canvas at (0,83) 642x482 when the frame is 642 wide
+      crop:{ fw:642, fh:565, x:0, y:83, w:642, h:482 },
       keys:[['W A S D','MOVE'],['MOUSE','LOOK'],['L-CLICK','FIRE'],['SPACE','JUMP'],['1-5','WEAPONS'],['TAB','SCORES']] },
   ];
 
@@ -312,9 +314,20 @@
     f.src = g.src;
     f.allow = 'autoplay; fullscreen; pointer-lock; gamepad';
     f.allowFullscreen = true;
+    win.classList.add('open');   // must be laid out to measure the body
+    if (g.crop){
+      const c = g.crop, bw = wbody.clientWidth, bh = wbody.clientHeight;
+      const k = Math.min(bw / c.w, bh / c.h);
+      Object.assign(f.style, { width: c.fw + 'px', height: c.fh + 'px', inset: 'auto', transformOrigin: '0 0',
+        transform: `translate(${(bw - c.w * k) / 2 - c.x * k}px,${(bh - c.h * k) / 2 - c.y * k}px) scale(${k})` });
+    }
     wbody.appendChild(f);
+    // some games swallow the click (preventDefault on mousedown), so the frame never gets keyboard focus; hand it over
+    const focusGame = () => { try { f.contentWindow.focus(); } catch (e) {} };
+    f.addEventListener('load', focusGame);
+    f.addEventListener('mouseover', focusGame);
     // ponytail: fixed per-game delay; the cross-origin frame can't tell us when it's ready
-    loadTimer = setTimeout(() => loader.classList.add('off'), g.load);
+    loadTimer = setTimeout(() => { loader.classList.add('off'); focusGame(); }, g.load);
     win.classList.add('open');
     $('task').style.display = ''; $('task').innerHTML = tile(g) + g.name;
     setHud(g);
