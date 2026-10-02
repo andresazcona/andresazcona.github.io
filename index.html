@@ -176,7 +176,7 @@
           </div>
         </div>
       </div>
-      <div id="startmenu" class="bev"><div class="side">OS<span> 97</span></div><div id="smitems"></div></div>
+      <div id="startmenu" class="bev"><div class="side">MAKINTOCH<span> 97</span></div><div id="smitems"></div></div>
       <div id="taskbar" class="bev">
         <button id="startbtn" class="bev"><i><b style="background:#ff3b1f"></b><b style="background:#ff5fb0"></b><b style="background:#00d9d0"></b><b style="background:#ffb35c"></b></i>Start</button>
         <button id="task" class="bev" style="display:none"></button>
@@ -185,7 +185,7 @@
     </div>
     <div id="splash" class="px">
       <div class="logo"><i style="background:#ff3b1f"></i><i style="background:#ff5fb0"></i><i style="background:#00d9d0"></i><i style="background:#ffb35c"></i></div>
-      <b>OS<span> 97</span></b>
+      <b>Makintoch<span> 97</span></b>
       <div class="bar"></div>
     </div>
     <div id="boot" class="px"></div>
@@ -293,7 +293,7 @@
 
   // ---------- HUD ----------
   function setHud(g){
-    $('hudtitle').textContent = g ? g.name.toUpperCase() : 'OS 97';
+    $('hudtitle').textContent = g ? g.name.toUpperCase() : 'MAKINTOCH 97';
     $('hudkeys').innerHTML = (g ? g.keys : [['CLICK','OPEN A GAME'],['START','GAME MENU']])
       .map(([k, a]) => `<tr><td>${k}</td><td>${a}</td></tr>`).join('');
     $('hudtip').innerHTML = g ? 'CLICK THE GAME<br>TO GRAB THE KEYBOARD' : 'PICK A GAME FROM<br>THE DESKTOP';
@@ -341,7 +341,7 @@
   })();
 
   // ---------- boot sequence ----------
-  const LINES = ['Starting OS 97...', '', 'HIMEM is testing extended memory...done.', 'C:\\> WIN'];
+  const LINES = ['Starting MAKINTOCH 97...', '', 'HIMEM is testing extended memory...done.', 'C:\\> WIN'];
   function typeBoot(done){
     let i = 0;
     (function next(){
