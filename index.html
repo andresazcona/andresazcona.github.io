@@ -99,10 +99,53 @@
   .more p{ margin:0; font-size:15px; }
   .more .btns{ margin-top:14px; }
 
-  footer{ margin-top:72px; padding:28px 0 40px; border-top:2px solid var(--red); background:var(--panel); font-size:14px; color:#cfc8e4; }
-  footer .wrap{ display:flex; flex-wrap:wrap; gap:14px 26px; align-items:center; }
-  footer .px-btn{ font-size:9px; }
-  footer .note{ margin-left:auto; font:9px/2 var(--pixel); color:#fff8; }
+  /* experience timeline */
+  .tl{ list-style:none; margin:0; padding:0 0 0 28px; border-left:2px dashed #ff3b1f66; max-width:860px; }
+  .tl > li{ position:relative; padding:0 0 36px; }
+  .tl > li::before{ content:''; position:absolute; left:-36px; top:4px; width:14px; height:14px; background:var(--c, var(--red)); box-shadow:3px 3px 0 #0008; }
+  .tl .when{ font:9px/1.8 var(--pixel); color:var(--orange); letter-spacing:1px; }
+  .tl h3{ margin:6px 0 0; font:600 21px var(--sans); color:#fff; }
+  .tl .org{ font:14px var(--mono); color:var(--cyan); }
+  .tl p{ margin:8px 0 0; color:#cfc8e4; }
+  .tl ul{ margin:8px 0 0; padding-left:20px; color:#cfc8e4; }
+  .more-link{ font:9px var(--pixel); color:var(--cream); }
+
+  /* skills + certificates */
+  .two{ display:grid; grid-template-columns:minmax(0, 1.1fr) minmax(0, 1fr); gap:28px; align-items:start; }
+  .two .win{ margin:0; }
+  .two .body{ display:block; padding:16px 18px 18px; }
+  .grp{ margin:0 0 14px; }
+  .grp h4{ margin:0 0 6px; font:9px var(--pixel); color:#000080; letter-spacing:1px; }
+  .grp .chips{ margin:0; }
+  .certs{ list-style:none; margin:0; padding:0; }
+  .certs li{ padding:9px 0; border-bottom:1px solid #a0a0a0; }
+  .certs li:last-child{ border-bottom:0; }
+  .certs a{ color:#000080; font-weight:600; }
+  .certs .ci{ display:block; font:13px var(--mono); color:#444; }
+  .win .note{ margin:12px 0 0; font-size:14.5px; }
+  .win .note a{ color:#000080; }
+  @media (max-width:820px){ .two{ grid-template-columns:1fr; } }
+
+  /* articles */
+  .posts{ display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:24px; }
+  .posts .win{ margin:0; display:flex; flex-direction:column; }
+  .posts .body{ display:flex; flex-direction:column; gap:0; flex:1; padding:16px 18px 18px; }
+  .posts .meta{ font:9px/1.8 var(--pixel); color:#000080; letter-spacing:1px; }
+  .posts h3{ margin:8px 0 0; font:600 20px/1.3 var(--sans); }
+  .posts p{ margin:10px 0 0; font-size:15px; flex:1; }
+
+  /* contact */
+  .contact{ text-align:center; padding:110px 16px 90px; }
+  .contact h2{ font-size:clamp(20px, 4vw, 40px); }
+  .contact p{ margin:22px auto 0; max-width:46ch; color:#cfc8e4; font-size:18px; }
+  .contact .cta{ margin-top:34px; }
+
+  /* footer as a Win9x taskbar */
+  footer.bev{ display:flex; align-items:center; gap:4px; padding:3px; min-height:34px; color:#000; font:bold 12px Tahoma,Verdana,sans-serif; flex-wrap:wrap; }
+  footer a{ color:#000; text-decoration:none; display:flex; align-items:center; gap:6px; height:26px; padding:0 10px; }
+  footer a:active{ box-shadow: inset 1px 1px 0 #000, inset -1px -1px 0 #fff, inset 2px 2px 0 #808080; }
+  footer a:focus-visible{ outline:1px dotted #000; outline-offset:-4px; }
+  footer .clock{ margin-left:auto; height:26px; padding:0 12px; display:flex; align-items:center; font-weight:400; box-shadow: inset 1px 1px 0 #808080, inset -1px -1px 0 #fff; }
 
   @keyframes blink{ 50%{ opacity:0; } }
   @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } .scroll{ animation:none; } }
@@ -114,9 +157,9 @@
   <div class="wrap">
     <a class="logo" href="#top"><img src="favicon.svg" width="22" height="24" alt=""><span>ANDRES AZCONA</span></a>
     <a class="l" href="#projects"><span class="en">PROJECTS</span><span class="es">PROYECTOS</span></a>
+    <a class="l hide-sm" href="#experience"><span class="en">EXPERIENCE</span><span class="es">EXPERIENCIA</span></a>
+    <a class="l" href="#blog">BLOG</a>
     <a class="l" href="/cv/">CV</a>
-    <a class="l hide-sm" href="https://github.com/andresazcona">GITHUB</a>
-    <a class="l hide-sm" href="https://www.linkedin.com/in/andresazcona">LINKEDIN</a>
     <button id="lang" aria-label="Cambiar a español">ES</button>
   </div>
 </nav>
@@ -252,17 +295,161 @@
     </div>
   </div>
 </section>
+<section class="block" id="experience">
+  <div class="wrap">
+    <h2><span class="en">EXPERIENCE</span><span class="es">EXPERIENCIA</span></h2>
+    <p class="lede"><span class="en">From building client websites to leading the technical side of a company.</span><span class="es">De hacer sitios web para clientes a liderar la parte técnica de una empresa.</span></p>
+    <ol class="tl">
+      <li style="--c:var(--red)">
+        <div class="when"><span class="en">APR 2026 - PRESENT</span><span class="es">ABR 2026 - HOY</span></div>
+        <h3>Technical Lead</h3>
+        <div class="org"><span class="en">Technology company · Bogotá · Hybrid</span><span class="es">Empresa de tecnología · Bogotá · Híbrido</span></div>
+        <p class="en">I define and drive the company's technical vision, so the architecture stays scalable, resilient and aligned with the business.</p>
+        <p class="es">Defino y dirijo la visión técnica de la empresa, para que la arquitectura sea escalable, resiliente y alineada con el negocio.</p>
+        <ul class="en">
+          <li>Architecture and solution design for web platforms, desktop apps and monitoring systems.</li>
+          <li>Engineering teams on GitFlow with Jira and GitHub, structured pull request reviews and mentoring.</li>
+          <li>High-availability deployments on AWS and Azure: Docker, Kubernetes/AKS, Helm, Argo CD, Lambda and IAM.</li>
+          <li>Observability with Sentry to catch issues fast and cut downtime.</li>
+        </ul>
+        <ul class="es">
+          <li>Arquitectura y diseño de soluciones para plataformas web, aplicaciones de escritorio y sistemas de monitoreo.</li>
+          <li>Equipos de ingeniería con GitFlow, Jira y GitHub, revisiones estructuradas de pull requests y mentoría.</li>
+          <li>Despliegues de alta disponibilidad en AWS y Azure: Docker, Kubernetes/AKS, Helm, Argo CD, Lambda e IAM.</li>
+          <li>Observabilidad con Sentry para detectar fallas rápido y reducir el tiempo fuera de servicio.</li>
+        </ul>
+      </li>
+      <li style="--c:var(--pink)">
+        <div class="when"><span class="en">JAN 2025 - JUL 2025</span><span class="es">ENE 2025 - JUL 2025</span></div>
+        <h3><span class="en">Software Developer</span><span class="es">Desarrollador de software</span></h3>
+        <div class="org">Sofka Technologies · <span class="en">Contract · Remote</span><span class="es">Contrato · Remoto</span></div>
+        <p class="en">Backend with Express and Spring Boot using proven design patterns: clean architecture, efficient APIs and integration across services.</p>
+        <p class="es">Backend con Express y Spring Boot aplicando patrones de diseño probados: arquitectura limpia, APIs eficientes e integración entre servicios.</p>
+      </li>
+      <li style="--c:var(--cyan)">
+        <div class="when"><span class="en">JAN 2024 - JAN 2025</span><span class="es">ENE 2024 - ENE 2025</span></div>
+        <h3><span class="en">Full Stack Web Developer</span><span class="es">Desarrollador web full stack</span></h3>
+        <div class="org">Crossover · <span class="en">Remote</span><span class="es">Remoto</span></div>
+        <p class="en">High-performance web apps with Node.js, Express and React: REST APIs, SQL and NoSQL databases (including Firebase) and strong security practices.</p>
+        <p class="es">Aplicaciones web de alto rendimiento con Node.js, Express y React: APIs REST, bases de datos SQL y NoSQL (incluido Firebase) y buenas prácticas de seguridad.</p>
+      </li>
+      <li style="--c:var(--orange)">
+        <div class="when"><span class="en">NOV 2022 - MAY 2024</span><span class="es">NOV 2022 - MAY 2024</span></div>
+        <h3><span class="en">Operations Manager · Supervisor · Customer Care</span><span class="es">Gerente de operaciones · Supervisor · Servicio al cliente</span></h3>
+        <div class="org">Teleperformance · <span class="en">Remote</span><span class="es">Remoto</span></div>
+        <p class="en">Led customer care operations: team performance, training and KPI analysis, working with technology teams on call routing.</p>
+        <p class="es">Lideré la operación de servicio al cliente: desempeño del equipo, capacitación y análisis de KPI, de la mano de los equipos de tecnología en el enrutamiento de llamadas.</p>
+      </li>
+      <li style="--c:var(--cream)">
+        <div class="when"><span class="en">OCT 2022 - FEB 2023</span><span class="es">OCT 2022 - FEB 2023</span></div>
+        <h3><span class="en">Web Developer</span><span class="es">Desarrollador web</span></h3>
+        <div class="org">M&amp;M IT Consulting · <span class="en">Remote</span><span class="es">Remoto</span></div>
+        <p class="en">Websites and online stores for clients with WordPress, Elementor and WooCommerce.</p>
+        <p class="es">Sitios web y tiendas en línea para clientes con WordPress, Elementor y WooCommerce.</p>
+      </li>
+    </ol>
+
+    <h2 style="font-size:clamp(14px,2vw,18px); margin-top:40px"><span class="en">EDUCATION</span><span class="es">ESTUDIOS</span></h2>
+    <ol class="tl" style="margin-top:28px">
+      <li style="--c:var(--cyan)">
+        <div class="when">2023 - 2028</div>
+        <h3><span class="en">Informatics Engineering</span><span class="es">Ingeniería Informática</span></h3>
+        <div class="org">Universidad de La Sabana · IEEE RAS &amp; IAS</div>
+        <ul class="en">
+          <li><b>Winner of SabanaHack 2025</b>, the university hackathon (November 2025).</li>
+          <li>Represented the university at <b>RoboCup 2026 Rescue</b> with the applied robotics group: ROS, URDF and Raspberry Pi.</li>
+        </ul>
+        <ul class="es">
+          <li><b>Ganador de SabanaHack 2025</b>, el hackathon de la universidad (noviembre de 2025).</li>
+          <li>Representé a la universidad en <b>RoboCup 2026 Rescue</b> con el semillero de robótica aplicada: ROS, URDF y Raspberry Pi.</li>
+        </ul>
+      </li>
+    </ol>
+    <a class="more-link" href="/cv/"><span class="en">FULL CV &gt;</span><span class="es">CV COMPLETO &gt;</span></a>
+  </div>
+</section>
+
+<section class="block" id="skills">
+  <div class="wrap">
+    <h2><span class="en">SKILLS</span><span class="es">HABILIDADES</span></h2>
+    <p class="lede"><span class="en">What I work with, and the certificates behind it.</span><span class="es">Con qué trabajo y los certificados que lo respaldan.</span></p>
+    <div class="two">
+      <article class="win">
+        <div class="bar"><span class="t">C:\SKILLS</span><span class="ctl" aria-hidden="true"><span class="bev">_</span><span class="bev">&#9633;</span><span class="bev">&#10005;</span></span></div>
+        <div class="body">
+          <div class="grp"><h4>BACKEND</h4><ul class="chips"><li>Java / Spring Boot</li><li>.NET</li><li>Node.js / Express</li><li>Python</li><li>REST APIs</li></ul></div>
+          <div class="grp"><h4>FRONTEND</h4><ul class="chips"><li>React</li><li>TypeScript</li><li>Electron</li><li>Firebase</li></ul></div>
+          <div class="grp"><h4>CLOUD &amp; DEVOPS</h4><ul class="chips"><li>AWS</li><li>Azure / AKS</li><li>Terraform</li><li>Docker</li><li>Kubernetes</li><li>Helm</li><li>Argo CD</li><li>CI/CD</li></ul></div>
+          <div class="grp"><h4><span class="en">DATA</span><span class="es">DATOS</span></h4><ul class="chips"><li>SQL / MySQL</li><li>NoSQL</li><li>Power BI</li><li>Pandas</li></ul></div>
+          <div class="grp"><h4><span class="en">RELIABILITY &amp; SECURITY</span><span class="es">CONFIABILIDAD Y SEGURIDAD</span></h4><ul class="chips"><li>Sentry</li><li>OpenTelemetry</li><li>Prometheus / Grafana</li><li>IAM</li><li>Linux</li><li>TCP/IP</li></ul></div>
+          <div class="grp" style="margin:0"><h4><span class="en">LANGUAGES</span><span class="es">IDIOMAS</span></h4><ul class="chips"><li class="en">Spanish · native</li><li class="es">Español · nativo</li><li class="en">English · bilingual</li><li class="es">Inglés · bilingüe</li><li class="en">Portuguese · elementary</li><li class="es">Portugués · básico</li></ul></div>
+        </div>
+      </article>
+      <article class="win">
+        <div class="bar"><span class="t">C:\CERTS</span><span class="ctl" aria-hidden="true"><span class="bev">_</span><span class="bev">&#9633;</span><span class="bev">&#10005;</span></span></div>
+        <div class="body">
+          <ul class="certs">
+            <li><a href="https://www.credly.com/badges/79ee1820-f584-4b43-aa3f-542bca629a56">AWS Academy Graduate — Cloud Architecting</a><span class="ci">Amazon Web Services · 2026</span></li>
+            <li><a href="https://www.coursera.org/account/accomplishments/specialization/MHQFRB6SZONQ">Ciberseguridad de Google</a><span class="ci">Google · Coursera · 2026</span></li>
+            <li><a href="https://coursera.org/verify/RM3K2DFRCOU9">Fundamentos de la Ciberseguridad</a><span class="ci">Google · Coursera · 2025</span></li>
+            <li><a href="https://www.credly.com/badges/49e9450a-ef0e-411b-8f78-81fa61506d5d">Cisco Network Technician</a><span class="ci">Cisco Networking Academy · 2025</span></li>
+            <li><a href="https://www.hackerrank.com/certificates/6282fdf1069c">Software Engineer Intern</a><span class="ci">HackerRank · 2025</span></li>
+          </ul>
+          <p class="note en">More badges on <a href="https://www.credly.com/users/andres-azcona.10d72d21">Credly</a> (Cisco Linux, IoT, networking and security).</p>
+          <p class="note es">Más insignias en <a href="https://www.credly.com/users/andres-azcona.10d72d21">Credly</a> (Cisco Linux, IoT, redes y seguridad).</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="blog">
+  <div class="wrap">
+    <h2><span class="en">ARTICLES</span><span class="es">PUBLICACIONES</span></h2>
+    <p class="lede"><span class="en">Notes on decisions from my own projects, on Medium.</span><span class="es">Notas sobre decisiones de mis propios proyectos, en Medium.</span></p>
+    <div class="posts">
+      <article class="win">
+        <div class="bar"><span class="t">nat-gateway.txt - Notepad</span></div>
+        <div class="body">
+          <span class="meta"><span class="en">OCT 2026 · IN SPANISH</span><span class="es">OCT 2026 · EN ESPANOL</span></span>
+          <h3>Antes de poner un NAT gateway en AWS, hazte esta pregunta</h3>
+          <p class="en">How I designed SQLhelper's AWS platform without a NAT gateway: what the containers really need to reach, and why the network ended up cheaper and more locked down.</p>
+          <p class="es">Cómo diseñé la plataforma de SQLhelper en AWS sin NAT gateway: a qué necesitan llegar de verdad los contenedores y por qué la red quedó más barata y más cerrada.</p>
+          <div class="btns"><a class="btn98 bev" href="https://andresazcona.medium.com/antes-de-poner-un-nat-gateway-en-aws-hazte-esta-pregunta-7e33ffecbb9e"><span class="en">Read on Medium</span><span class="es">Leer en Medium</span></a></div>
+        </div>
+      </article>
+      <article class="win">
+        <div class="bar"><span class="t">geoflux-sort.txt - Notepad</span></div>
+        <div class="body">
+          <span class="meta"><span class="en">OCT 2025 · IN ENGLISH</span><span class="es">OCT 2025 · EN INGLES</span></span>
+          <h3>GeoFlux Sort: A Bidirectional Adaptive Algorithm for Natural Data Ordering</h3>
+          <p class="en">A sorting algorithm that groups similar values and moves them together, with the idea, the code and a real-time visualization.</p>
+          <p class="es">Un algoritmo de ordenamiento que agrupa valores parecidos y los mueve juntos, con la idea, el código y una visualización en tiempo real.</p>
+          <div class="btns"><a class="btn98 bev" href="https://andresazcona.medium.com/geoflux-sort-a-bidirectional-adaptive-algorithm-for-natural-data-ordering-5dc8d625e0fd"><span class="en">Read on Medium</span><span class="es">Leer en Medium</span></a></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <h2><span class="en">LET'S TALK</span><span class="es">HABLEMOS</span></h2>
+  <p><span class="en">A project, a role or just a question about something I built: write me.</span><span class="es">Un proyecto, una oferta o solo una pregunta sobre algo que hice: escríbeme.</span></p>
+  <div class="cta">
+    <a class="px-btn" href="mailto:andres.azcona@outlook.com">ANDRES.AZCONA@OUTLOOK.COM</a>
+    <a class="px-btn alt" href="https://www.linkedin.com/in/andresazcona">LINKEDIN</a>
+    <a class="px-btn alt" href="https://github.com/andresazcona">GITHUB</a>
+  </div>
+</section>
 </main>
 
-<footer>
-  <div class="wrap">
-    <a class="px-btn" href="mailto:andres.azcona@outlook.com">andres.azcona@outlook.com</a>
-    <a href="https://www.linkedin.com/in/andresazcona">LinkedIn</a>
-    <a href="https://github.com/andresazcona">GitHub</a>
-    <a href="/cv/">CV</a>
-    <span>Bogotá, Colombia</span>
-    <span class="note"><a href="/retro/">RETRO.EXE &gt;</a></span>
-  </div>
+<footer class="bev">
+  <a class="bev" href="#top"><img src="favicon.svg" width="14" height="16" alt="">Andres Azcona</a>
+  <a class="bev" href="/cv/">CV</a>
+  <a class="bev" href="https://www.linkedin.com/in/andresazcona">LinkedIn</a>
+  <a class="bev" href="https://github.com/andresazcona">GitHub</a>
+  <a class="bev" href="/retro/">RETRO.EXE</a>
+  <span class="clock" id="clock">Bogotá</span>
 </footer>
 
 <script>
@@ -287,6 +474,15 @@
     function upd() { nav.classList.toggle('solid', scrollY > 40); }
     addEventListener('scroll', upd, { passive: true });
     upd();
+  })();
+
+  // taskbar clock, in Bogotá time
+  (function () {
+    var el = document.getElementById('clock');
+    (function tick() {
+      el.textContent = 'Bogotá ' + new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', timeZone: 'America/Bogota' });
+      setTimeout(tick, 15000);
+    })();
   })();
 
   // demos play only while on screen; with reduced motion they wait for a click
