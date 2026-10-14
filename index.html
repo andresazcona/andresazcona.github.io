@@ -2,400 +2,294 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>RETRO.EXE — andresazcona</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Andres Azcona — Technical Lead · Full Stack &amp; Cloud</title>
+<meta name="description" content="Andres Azcona, Technical Lead and Full Stack &amp; Cloud Software Engineer in Bogotá. Projects in Java/Spring Boot, Node.js/React, Python, Terraform, AWS, Azure and Kubernetes.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="assets/room.webp" imagesrcset="assets/room-960.webp 960w, assets/room.webp 1920w" imagesizes="100vw">
 <style>
-  *{box-sizing:border-box;}
-  html,body{ margin:0; width:100%; height:100%; background:#000; overflow:hidden; font-family:'Press Start 2P',monospace; }
+  /* same palette as RETRO.EXE */
+  :root{
+    --bg:#0d0221; --panel:rgba(8,2,20,.82);
+    --red:#ff3b1f; --red-d:#5a0a00; --pink:#ff5fb0; --cyan:#00d9d0; --orange:#ffb35c; --cream:#ffe7a8;
+    --gray:#c0c0c0; --pixel:'Press Start 2P',monospace; --sans:'IBM Plex Sans',system-ui,sans-serif; --mono:'IBM Plex Mono',Consolas,monospace;
+  }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; scroll-padding-top:64px; }
+  body{
+    margin:0; color:#eae6f5; font:16px/1.6 var(--sans); background:var(--bg);
+    background-image:radial-gradient(circle, rgba(255,255,255,.07) 1px, transparent 1.4px); background-size:32px 32px;
+  }
+  [lang="es"] .en, [lang="en"] .es{ display:none !important; }
+  a{ color:var(--cyan); }
+  .wrap{ width:min(1100px, 100% - 32px); margin:0 auto; }
 
-  /* the whole room lives in a 1600x1000 "world" we move like a camera */
-  #world{
-    position:absolute; left:0; top:0; width:1600px; height:1000px;
-    transform-origin:0 0;
-    transition: transform 3.2s cubic-bezier(.65,0,.3,1), filter 1.2s ease;
-  }
-  #world.dim{ filter: brightness(.3) blur(3px) saturate(.8); }
-  #world img{ position:absolute; inset:0; width:1600px; height:1000px; display:block; }
+  /* ---------- nav ---------- */
+  .nav{ position:fixed; inset:0 0 auto; z-index:50; background:var(--panel); backdrop-filter:blur(6px); border-bottom:2px solid var(--red); }
+  .nav .wrap{ display:flex; align-items:center; gap:18px; height:56px; }
+  .logo{ display:flex; align-items:center; gap:10px; color:var(--cream); text-decoration:none; font:10px var(--pixel); letter-spacing:1px; margin-right:auto; }
+  .logo i{ display:grid; grid-template-columns:7px 7px; gap:2px; transform:skewY(-6deg); }
+  .logo i b{ width:7px; height:6px; display:block; }
+  .nav a.l{ color:var(--cream); text-decoration:none; font:9px var(--pixel); letter-spacing:1px; }
+  .nav a.l:hover, .nav a.l:focus-visible{ color:var(--cyan); }
+  .nav button{ font:9px var(--pixel); color:var(--bg); background:var(--cyan); border:0; padding:7px 8px; cursor:pointer; box-shadow:2px 2px 0 #003b38; }
+  @media (max-width:640px){ .nav .hide-sm{ display:none; } .logo span{ display:none; } }
 
-  /* covers the whole teal glass of the render; rounded + glow so it reads as the CRT itself */
-  #screen{
-    position:absolute; left:729px; top:306px; width:231px; height:188px; background:#000; overflow:hidden;
-    border-radius:7px / 8px;
-    box-shadow: 0 0 6px 1px rgba(150,255,210,.28), 0 0 18px 4px rgba(120,255,200,.12);
-  }
-  /* the PC's display runs at 640x521 and is scaled into the 231px slot, so it stays sharp when zoomed */
-  .px{ position:absolute; left:0; top:0; width:640px; height:521px; transform-origin:0 0; transform:scale(.3609); }
-  .crt-fx{
-    position:absolute; inset:0; pointer-events:none; z-index:50;
-    border-radius:inherit;
-    background:
-      linear-gradient(155deg, rgba(255,255,255,.10) 0%, rgba(255,255,255,.03) 28%, rgba(255,255,255,0) 45%),
-      repeating-linear-gradient(rgba(0,0,0,0) 0px, rgba(0,0,0,0) 1px, rgba(0,0,0,.16) 1.5px),
-      radial-gradient(ellipse at center, rgba(0,0,0,0) 60%, rgba(0,0,0,.5) 100%);
-    box-shadow: inset 0 0 10px 3px rgba(0,0,0,.85), inset 0 0 2px 1px rgba(0,0,0,.9);
+  /* ---------- hero: the RETRO.EXE room, dimmed like its title screen ---------- */
+  .hero{ position:relative; min-height:100svh; display:flex; align-items:center; justify-content:center; text-align:center; overflow:hidden; padding:96px 16px 72px; }
+  .hero img{ position:absolute; inset:-12px; width:calc(100% + 24px); height:calc(100% + 24px); object-fit:cover; filter:brightness(.32) blur(3px) saturate(.85); }
+  .hero::after{ content:''; position:absolute; inset:0; pointer-events:none;
+    background:repeating-linear-gradient(rgba(0,0,0,0) 0 2px, rgba(0,0,0,.18) 2px 3px), radial-gradient(ellipse at center, rgba(0,0,0,0) 55%, rgba(0,0,0,.6) 100%); }
+  .hero .in{ position:relative; z-index:1; max-width:900px; }
+  .pre{ font:11px var(--pixel); letter-spacing:4px; color:var(--orange); margin:0 0 26px; }
+  h1{ margin:0; font:400 clamp(26px, 7vw, 76px)/1.15 var(--pixel); letter-spacing:3px; color:var(--red); text-shadow:4px 4px 0 var(--red-d), 0 0 28px #ff3b1f99; }
+  .role{ margin:24px 0 0; font:10px/2 var(--pixel); letter-spacing:3px; color:var(--pink); }
+  .tag{ margin:22px auto 0; font-size:clamp(18px, 2.4vw, 24px); color:#fff; max-width:34ch; }
+  .stack{ margin:10px 0 0; font:14px var(--mono); color:#cfc8e4; }
+  .cta{ margin-top:38px; display:flex; flex-wrap:wrap; gap:14px; justify-content:center; }
+  .px-btn{ font:10px var(--pixel); letter-spacing:1px; text-decoration:none; padding:12px 14px; color:#000; background:var(--orange); box-shadow:3px 3px 0 var(--red-d); }
+  .px-btn:hover, .px-btn:focus-visible{ background:var(--cream); }
+  .px-btn.alt{ color:var(--cyan); background:var(--panel); border:2px solid var(--cyan); box-shadow:3px 3px 0 #003b38; padding:10px 12px; }
+  .px-btn.alt:hover, .px-btn.alt:focus-visible{ color:var(--bg); background:var(--cyan); }
+  .play{ margin-top:30px; font:9px/2 var(--pixel); color:#fff9; }
+  .play a{ color:var(--cream); }
+  .scroll{ position:absolute; z-index:1; bottom:22px; left:0; right:0; font:9px var(--pixel); color:var(--cream); animation:blink 1.1s steps(1) infinite; }
+
+  /* ---------- sections ---------- */
+  section.block{ padding:88px 0 24px; }
+  h2{ margin:0; font:400 clamp(18px, 3vw, 28px) var(--pixel); color:var(--red); letter-spacing:2px; text-shadow:3px 3px 0 var(--red-d); }
+  .lede{ margin:16px 0 40px; color:#cfc8e4; max-width:62ch; }
+
+  /* ---------- Win9x windows ---------- */
+  .bev{ background:var(--gray); box-shadow: inset -1px -1px 0 #000, inset 1px 1px 0 #fff, inset -2px -2px 0 #808080, inset 2px 2px 0 #dfdfdf; }
+  .win{ background:var(--gray); padding:3px; margin-bottom:40px; color:#111; box-shadow: inset -1px -1px 0 #000, inset 1px 1px 0 #fff, inset -2px -2px 0 #808080, inset 2px 2px 0 #dfdfdf, 8px 8px 0 rgba(0,0,0,.45); }
+  .win .bar{ display:flex; align-items:center; gap:6px; height:24px; padding:0 3px 0 7px; color:#fff; font:bold 13px Tahoma,Verdana,sans-serif; background:linear-gradient(90deg,#000080,#1084d0); }
+  .win .bar .t{ flex:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .win .bar .ctl{ display:flex; gap:2px; }
+  .win .bar .ctl span{ width:18px; height:16px; display:grid; place-items:center; color:#000; font:bold 10px/1 Tahoma,sans-serif; }
+  .win .body{ display:grid; grid-template-columns:minmax(0, 1.25fr) minmax(0, 1fr); gap:22px; padding:16px; }
+  .media{ display:block; background:#000; aspect-ratio:96/57; overflow:hidden; box-shadow: inset 1px 1px 0 #808080, inset -1px -1px 0 #fff; border:2px solid #fff; outline:1px solid #808080; }
+  .media video, .media img{ width:100%; height:100%; object-fit:contain; display:block; }
+  .media.light{ background:#fff; }
+  .info h3{ margin:0 0 4px; font:600 22px var(--sans); }
+  .info .kind{ font:9px var(--pixel); color:#000080; letter-spacing:1px; }
+  .info p{ margin:12px 0 0; font-size:15.5px; }
+  .chips{ display:flex; flex-wrap:wrap; gap:6px; margin:16px 0 0; padding:0; list-style:none; }
+  .chips li{ font:12.5px var(--mono); padding:2px 7px; background:#fff; box-shadow: inset 1px 1px 0 #808080, inset -1px -1px 0 #dfdfdf; }
+  .btns{ display:flex; flex-wrap:wrap; gap:10px; margin-top:20px; }
+  .btn98{ font:bold 13px Tahoma,Verdana,sans-serif; color:#000; text-decoration:none; padding:7px 14px; }
+  .btn98:active{ box-shadow: inset 1px 1px 0 #000, inset -1px -1px 0 #fff, inset 2px 2px 0 #808080; }
+  .btn98:focus-visible{ outline:1px dotted #000; outline-offset:-5px; }
+  .win.rev .body{ grid-template-columns:minmax(0, 1fr) minmax(0, 1.25fr); }
+  .win.rev .media{ order:2; }
+  @media (max-width:820px){
+    .win .body, .win.rev .body{ grid-template-columns:1fr; }
+    .win.rev .media{ order:0; }
   }
 
-  /* ---------- boot ---------- */
-  #boot{
-    z-index:40; background:#000; color:#b8b8b8;
-    padding:22px 20px; font:15px/1.9 Consolas,'Courier New',monospace; white-space:pre-wrap;
-    transition: opacity .6s ease;
-  }
-  .off{ opacity:0 !important; pointer-events:none !important; }
-  .cur{ display:inline-block; width:10px; height:16px; background:#b8b8b8; vertical-align:-2px; animation:blink 1s steps(1) infinite; }
-  #splash{
-    z-index:41; background:linear-gradient(#0b1f6b, #3a6fd8 55%, #bcd4ff);
-    display:flex; flex-direction:column; align-items:center; justify-content:center; color:#fff;
-    font-family:Tahoma,Verdana,sans-serif; opacity:0; transition: opacity .6s ease; pointer-events:none;
-  }
-  #splash.on{ opacity:1; }
-  #splash .logo{ display:grid; grid-template-columns:28px 28px; gap:4px; transform:skewY(-6deg); margin-bottom:18px; }
-  #splash .logo i{ height:24px; display:block; }
-  #splash b{ font-size:44px; letter-spacing:1px; text-shadow:2px 2px 0 #0008; }
-  #splash b span{ font-weight:400; font-style:italic; }
-  #splash .bar{ position:absolute; bottom:0; left:0; right:0; height:10px; overflow:hidden;
-    background:linear-gradient(90deg, #1b3fb5, #4d8bff, #9fd0ff, #4d8bff, #1b3fb5); background-size:200% 100%; animation:slide 1.2s linear infinite; }
+  /* smaller windows for the rest */
+  .more{ display:grid; grid-template-columns:repeat(auto-fill, minmax(300px, 1fr)); gap:22px; }
+  .more .win{ margin:0; display:flex; flex-direction:column; }
+  .more .body{ display:block; flex:1; padding:14px 14px 16px; }
+  .more p{ margin:0; font-size:15px; }
+  .more .btns{ margin-top:14px; }
 
-  /* ---------- desktop (Win9x style) ---------- */
-  #desk{
-    z-index:10; background:#008080; font:11px Tahoma,'MS Sans Serif',Verdana,sans-serif; color:#000;
-    user-select:none; cursor:default;
-  }
-  #icons{
-    position:absolute; left:8px; top:8px; bottom:36px; right:8px;
-    display:grid; grid-template-columns:repeat(6, 88px); align-content:start; gap:2px 12px;
-  }
-  .ico{ display:flex; flex-direction:column; align-items:center; padding:4px 2px; cursor:pointer; }
-  .ico .tile{
-    width:34px; height:34px; display:flex; align-items:center; justify-content:center;
-    font:bold 12px Consolas,monospace; color:#fff; text-shadow:1px 1px 0 #000;
-    border:1px solid #000; box-shadow: inset 1px 1px 0 #fff8, inset -1px -1px 0 #0006, 2px 2px 0 #0004;
-  }
-  .ico .lbl{ margin-top:4px; padding:1px 2px; color:#fff; text-align:center; line-height:1.2; }
-  .ico:hover .lbl, .ico:focus .lbl{ background:#000080; outline:1px dotted #ff0; }
-  .ico:hover .tile{ filter:brightness(1.2); }
-  .sect{ grid-column:1 / -1; color:#fff; font-weight:bold; padding:10px 2px 4px; border-bottom:1px solid #fff4; margin-bottom:4px; text-shadow:1px 1px 0 #0006; }
-
-  .bev{ background:#c0c0c0; box-shadow: inset -1px -1px 0 #000, inset 1px 1px 0 #fff, inset -2px -2px 0 #808080, inset 2px 2px 0 #dfdfdf; }
-  .bev-in{ box-shadow: inset 1px 1px 0 #808080, inset -1px -1px 0 #fff; }
-  #taskbar{ position:absolute; left:0; right:0; bottom:0; height:28px; display:flex; align-items:center; gap:4px; padding:2px; z-index:30; }
-  #taskbar button{ font:bold 11px Tahoma,sans-serif; height:22px; border:0; padding:0 8px; cursor:pointer; display:flex; align-items:center; gap:5px; }
-  #taskbar button:active, #taskbar button.down{ box-shadow: inset 1px 1px 0 #000, inset -1px -1px 0 #fff, inset 2px 2px 0 #808080; }
-  #startbtn i{ display:grid; grid-template-columns:6px 6px; gap:1px; transform:skewY(-6deg); }
-  #startbtn i b{ width:6px; height:5px; display:block; }
-  #task{ font-weight:400 !important; min-width:150px; justify-content:flex-start; }
-  #clock{ margin-left:auto; height:22px; padding:0 10px; display:flex; align-items:center; }
-
-  #startmenu{ position:absolute; left:2px; bottom:28px; width:210px; z-index:35; display:none; padding:2px 2px 2px 26px; }
-  #startmenu.open{ display:block; }
-  #startmenu .side{ position:absolute; left:2px; top:2px; bottom:2px; width:22px; background:linear-gradient(#000080,#1084d0);
-    color:#c0c0c0; font:bold 16px Tahoma,sans-serif; writing-mode:vertical-rl; transform:rotate(180deg); padding:6px 0; }
-  #startmenu .side span{ color:#fff; }
-  #startmenu .hd{ padding:4px 6px 2px; color:#808080; font-weight:bold; }
-  #startmenu .it{ padding:4px 6px; display:flex; align-items:center; gap:6px; cursor:pointer; }
-  #startmenu .it:hover{ background:#000080; color:#fff; }
-  #startmenu .it .tile, #task .tile{ width:16px; height:16px; font-size:7px; }
-
-  #win{ position:absolute; left:0; top:0; width:640px; height:493px; z-index:20; padding:3px; display:none; flex-direction:column; }
-  #win.open{ display:flex; }
-  #win .bar{ height:20px; display:flex; align-items:center; padding:0 2px 0 5px; gap:4px; color:#fff; font-weight:bold;
-    background:linear-gradient(90deg,#000080,#1084d0); }
-  #win .bar .t{ flex:1; white-space:nowrap; overflow:hidden; }
-  #win .bar button{ width:16px; height:14px; border:0; padding:0; font:bold 10px/1 Tahoma,sans-serif; cursor:pointer; }
-  #win .body{ position:relative; flex:1; margin-top:2px; background:#000; overflow:hidden; }
-  #win iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
-  #loader{ position:absolute; inset:0; z-index:2; background:#008080; display:flex; align-items:center; justify-content:center; transition:opacity .5s; }
-  #loader .dlg{ width:300px; padding:3px; }
-  #loader .dlg .bar{ height:18px; }
-  #loader .dlg .in{ padding:14px 12px 12px; }
-  #loader .prog{ height:16px; margin-top:10px; padding:2px; background:#fff; }
-  #loader .prog i{ display:block; height:100%; width:0; background:repeating-linear-gradient(90deg,#000080 0 9px,transparent 9px 11px); }
-  #loader .hint{ margin-top:8px; color:#444; font-size:10px; }
-
-  /* ---------- link to the plain CV ---------- */
-  #cvlink{
-    position:fixed; top:14px; right:14px; z-index:120; font-size:9px; letter-spacing:1px; color:#00d9d0; text-decoration:none;
-    background:rgba(8,2,20,.8); border:2px solid #00d9d0; box-shadow:3px 3px 0 #003b38; padding:8px 10px;
-  }
-  #cvlink:hover{ background:#00d9d0; color:#0d0221; }
-
-  /* ---------- title screen ---------- */
-  #title{
-    position:fixed; inset:0; z-index:100; display:flex; flex-direction:column; align-items:center; justify-content:center;
-    text-align:center; color:#fff; cursor:pointer; padding:16px; transition: opacity .7s ease;
-  }
-  #title .pre{ font-size:11px; letter-spacing:4px; color:#ffb35c; margin-bottom:28px; }
-  #title h1{
-    margin:0; font-size:clamp(34px, 9vw, 96px); font-weight:400; letter-spacing:4px;
-    color:#ff3b1f; text-shadow: 4px 4px 0 #5a0a00, 0 0 28px #ff3b1f99;
-  }
-  #title .sub{ margin-top:22px; font-size:10px; letter-spacing:3px; color:#ff5fb0; line-height:2; }
-  #title .start{ margin-top:56px; font-size:14px; color:#ffe7a8; animation:blink 1.1s steps(1) infinite; }
-  #title .fine{ position:absolute; bottom:18px; left:0; right:0; font-size:8px; line-height:2; color:#fff6; padding:0 12px; }
-  #title .fine a{ color:inherit; }
-
-  /* ---------- controls panel ---------- */
-  #hud{
-    position:fixed; left:18px; bottom:18px; z-index:60; max-width:calc(100vw - 36px);
-    background:rgba(8,2,20,.8); border:2px solid #ff3b1f; box-shadow: 4px 4px 0 #5a0a00, 0 0 18px #ff3b1f44;
-    padding:14px 16px 12px; color:#ffe7a8; font-size:9px; line-height:1;
-    opacity:0; transform:translateY(12px); transition: opacity .6s ease, transform .6s ease; pointer-events:none;
-  }
-  #hud.on{ opacity:1; transform:none; pointer-events:auto; }
-  #hud h2{ margin:0 0 12px; font-size:10px; font-weight:400; color:#ff3b1f; letter-spacing:2px; }
-  #hud table{ border-collapse:collapse; }
-  #hud td{ padding:4px 0; }
-  #hud td:first-child{ color:#fff; padding-right:14px; white-space:nowrap; font:bold 12px Consolas,monospace; }
-  #hud .tip{ margin-top:10px; color:#ff5fb0; font-size:8px; line-height:1.6; }
-  #hud button{
-    margin-top:12px; font:inherit; font-size:8px; color:#000; background:#ffb35c; border:0; padding:7px 9px; cursor:pointer;
-    box-shadow: 2px 2px 0 #5a0a00;
-  }
-  #hud button:hover{ background:#ffe7a8; }
+  footer{ margin-top:72px; padding:28px 0 40px; border-top:2px solid var(--red); background:var(--panel); font-size:14px; color:#cfc8e4; }
+  footer .wrap{ display:flex; flex-wrap:wrap; gap:14px 26px; align-items:center; }
+  footer .px-btn{ font-size:9px; }
+  footer .note{ margin-left:auto; font:9px/2 var(--pixel); color:#fff8; }
 
   @keyframes blink{ 50%{ opacity:0; } }
-  @keyframes slide{ to{ background-position:-200% 0; } }
-  @keyframes fill{ to{ width:100%; } }
-  @media (max-width:640px){ #hud{ font-size:7px; left:10px; bottom:10px; padding:10px; } }
+  @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } .scroll{ animation:none; } }
 </style>
 </head>
 <body>
 
-<div id="world" class="dim">
-  <img src="room-scene-hi.jpg" alt="Retro room">
-  <div id="screen">
-    <div id="desk" class="px">
-      <div id="icons"></div>
-      <div id="win" class="bev">
-        <div class="bar"><span class="t" id="wtitle"></span><button class="bev" id="wmax" title="Fullscreen">&#9633;</button><button class="bev" id="wclose" title="Close">&#10005;</button></div>
-        <div class="body" id="wbody">
-          <div id="loader">
-            <div class="dlg bev">
-              <div class="bar"><span class="t">Please wait</span></div>
-              <div class="in">
-                <div id="ltext">Loading...</div>
-                <div class="prog bev-in"><i id="lprog"></i></div>
-                <div class="hint">Click the game once it starts to use the keyboard.</div>
-              </div>
-            </div>
+<nav class="nav" aria-label="Main">
+  <div class="wrap">
+    <a class="logo" href="#top"><i aria-hidden="true"><b style="background:#ff3b1f"></b><b style="background:#ff5fb0"></b><b style="background:#00d9d0"></b><b style="background:#ffb35c"></b></i><span>ANDRES AZCONA</span></a>
+    <a class="l" href="#projects"><span class="en">PROJECTS</span><span class="es">PROYECTOS</span></a>
+    <a class="l" href="/cv/">CV</a>
+    <a class="l hide-sm" href="https://github.com/andresazcona">GITHUB</a>
+    <a class="l hide-sm" href="https://www.linkedin.com/in/andresazcona">LINKEDIN</a>
+    <button id="lang" aria-label="Cambiar a español">ES</button>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <img src="assets/room.webp" srcset="assets/room-960.webp 960w, assets/room.webp 1920w" sizes="100vw" alt="" fetchpriority="high">
+  <div class="in">
+    <p class="pre"><span class="en">HELLO, MY NAME IS</span><span class="es">HOLA, MI NOMBRE ES</span></p>
+    <h1>ANDRES AZCONA</h1>
+    <p class="role">TECHNICAL LEAD &middot; FULL STACK &amp; CLOUD &middot; AWS &amp; AZURE</p>
+    <p class="tag"><span class="en">I build software and the cloud it runs on.</span><span class="es">Construyo software y la nube donde corre.</span></p>
+    <p class="stack">Java/Spring Boot · .NET · Node.js/React · Python · Terraform · Kubernetes</p>
+    <div class="cta">
+      <a class="px-btn" href="#projects"><span class="en">SEE PROJECTS</span><span class="es">VER PROYECTOS</span></a>
+      <a class="px-btn alt" href="/cv/">CV / RESUME</a>
+      <a class="px-btn alt" href="mailto:andres.azcona@outlook.com"><span class="en">EMAIL ME</span><span class="es">CONTACTO</span></a>
+    </div>
+    <p class="play"><span class="en">Rather play?</span><span class="es">¿Prefieres jugar?</span> <a href="/retro/">RETRO.EXE &gt;</a></p>
+  </div>
+  <div class="scroll" aria-hidden="true">SCROLL</div>
+</header>
+
+<main>
+<section class="block" id="projects">
+  <div class="wrap">
+    <h2><span class="en">PROJECTS</span><span class="es">PROYECTOS</span></h2>
+    <p class="lede"><span class="en">Software and the infrastructure behind it, built end to end. Each one has its code, diagrams and docs on GitHub.</span><span class="es">Software y la infraestructura detrás, hechos de punta a punta. Cada uno tiene su código, diagramas y documentación en GitHub.</span></p>
+
+    <article class="win">
+      <div class="bar"><span class="t">Folio</span><span class="ctl" aria-hidden="true"><span class="bev">_</span><span class="bev">&#9633;</span><span class="bev">&#10005;</span></span></div>
+      <div class="body">
+        <div class="media"><video src="assets/folio.mp4" poster="assets/folio.webp" muted loop playsinline preload="none" aria-label="Folio demo: asking a question about a PDF and opening the cited page"></video></div>
+        <div class="info">
+          <span class="kind">APP · AI</span>
+          <h3>Folio</h3>
+          <p class="en">Chat with your PDFs where every answer cites the page it came from. Hybrid retrieval that works with no API key, and optional Claude, OpenAI or Ollama. Answers stream over SSE.</p>
+          <p class="es">Chat con tus PDF donde cada respuesta cita la página de donde salió. Recuperación híbrida que funciona sin llave de API, con Claude, OpenAI u Ollama como opción. Las respuestas llegan en streaming por SSE.</p>
+          <ul class="chips"><li>Python</li><li>FastAPI</li><li>React</li><li>TypeScript</li><li>SSE</li><li>Docker</li></ul>
+          <div class="btns"><a class="btn98 bev" href="https://github.com/andresazcona/Folio"><span class="en">View code</span><span class="es">Ver código</span></a></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="win rev">
+      <div class="bar"><span class="t">SQLhelper + sqlhelper-platform</span><span class="ctl" aria-hidden="true"><span class="bev">_</span><span class="bev">&#9633;</span><span class="bev">&#10005;</span></span></div>
+      <div class="body">
+        <div class="media"><video src="assets/sqlhelper.mp4" poster="assets/sqlhelper.webp" muted loop playsinline preload="none" aria-label="SQLhelper demo: pasting SQL DDL and getting an ER diagram"></video></div>
+        <div class="info">
+          <span class="kind">APP · AWS PLATFORM</span>
+          <h3>SQLhelper</h3>
+          <p class="en">Paste SQL DDL from MySQL, PostgreSQL, SQLite, SQL Server or Oracle and get an entity-relationship diagram. Its production platform is a separate Terraform repo: CloudFront + S3, ECS Fargate behind an internal ALB, CodeDeploy blue/green, three environments and GitHub OIDC.</p>
+          <p class="es">Pegas DDL de MySQL, PostgreSQL, SQLite, SQL Server u Oracle y obtienes el diagrama entidad-relación. Su plataforma de producción está en otro repo de Terraform: CloudFront + S3, ECS Fargate detrás de un ALB interno, despliegue azul/verde con CodeDeploy, tres ambientes y GitHub OIDC.</p>
+          <ul class="chips"><li>TypeScript</li><li>Mermaid</li><li>Terraform</li><li>ECS Fargate</li><li>CloudFront</li><li>CodeDeploy</li></ul>
+          <div class="btns">
+            <a class="btn98 bev" href="https://github.com/andresazcona/SQLhelper"><span class="en">App code</span><span class="es">Código de la app</span></a>
+            <a class="btn98 bev" href="https://github.com/andresazcona/sqlhelper-platform"><span class="en">Platform (Terraform)</span><span class="es">Plataforma (Terraform)</span></a>
           </div>
         </div>
       </div>
-      <div id="startmenu" class="bev"><div class="side">MAKINTOCH<span> 97</span></div><div id="smitems"></div></div>
-      <div id="taskbar" class="bev">
-        <button id="startbtn" class="bev"><i><b style="background:#ff3b1f"></b><b style="background:#ff5fb0"></b><b style="background:#00d9d0"></b><b style="background:#ffb35c"></b></i>Start</button>
-        <button id="task" class="bev" style="display:none"></button>
-        <div id="clock" class="bev-in"></div>
+    </article>
+
+    <article class="win">
+      <div class="bar"><span class="t">aws-landing-zone</span><span class="ctl" aria-hidden="true"><span class="bev">_</span><span class="bev">&#9633;</span><span class="bev">&#10005;</span></span></div>
+      <div class="body">
+        <a class="media light" href="assets/alz.webp" target="_blank" rel="noopener"><img src="assets/alz.webp" loading="lazy" width="1200" height="690" alt="Organization diagram: management account, root SCPs, and Security, Infrastructure, Workloads, Sandbox and Suspended OUs"></a>
+        <div class="info">
+          <span class="kind">CLOUD · INFRASTRUCTURE AS CODE</span>
+          <h3>aws-landing-zone</h3>
+          <p class="en">A multi-account AWS landing zone in Terraform: Organizations with OUs, SCP guardrails, central logging, delegated security services (GuardDuty, Security Hub, Config), Identity Center and per-account budgets.</p>
+          <p class="es">Una landing zone multi-cuenta de AWS en Terraform: Organizations con OU, guardrails con SCP, logging central, servicios de seguridad delegados (GuardDuty, Security Hub, Config), Identity Center y presupuestos por cuenta.</p>
+          <ul class="chips"><li>Terraform</li><li>AWS Organizations</li><li>SCP</li><li>Identity Center</li><li>GuardDuty</li></ul>
+          <div class="btns"><a class="btn98 bev" href="https://github.com/andresazcona/aws-landing-zone"><span class="en">View code</span><span class="es">Ver código</span></a></div>
+        </div>
       </div>
+    </article>
+
+    <article class="win rev">
+      <div class="bar"><span class="t">k8s-gitops-platform</span><span class="ctl" aria-hidden="true"><span class="bev">_</span><span class="bev">&#9633;</span><span class="bev">&#10005;</span></span></div>
+      <div class="body">
+        <a class="media light" href="assets/k8s.webp" target="_blank" rel="noopener"><img src="assets/k8s.webp" loading="lazy" width="1200" height="748" alt="Architecture diagram of the Kubernetes GitOps platform"></a>
+        <div class="info">
+          <span class="kind">KUBERNETES · SRE</span>
+          <h3>k8s-gitops-platform</h3>
+          <p class="en">Four Node.js microservices on Kubernetes, deployed with Helm and Argo CD (app-of-apps). Traces, metrics and dashboards with OpenTelemetry, Prometheus, Grafana and Tempo, plus SLO alerts and k6 load tests.</p>
+          <p class="es">Cuatro microservicios Node.js en Kubernetes, desplegados con Helm y Argo CD (app-of-apps). Trazas, métricas y tableros con OpenTelemetry, Prometheus, Grafana y Tempo, más alertas de SLO y pruebas de carga con k6.</p>
+          <ul class="chips"><li>Kubernetes</li><li>Helm</li><li>Argo CD</li><li>OpenTelemetry</li><li>Prometheus</li><li>Grafana</li><li>k6</li></ul>
+          <div class="btns"><a class="btn98 bev" href="https://github.com/andresazcona/k8s-gitops-platform"><span class="en">View code</span><span class="es">Ver código</span></a></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="win">
+      <div class="bar"><span class="t">Lumo</span><span class="ctl" aria-hidden="true"><span class="bev">_</span><span class="bev">&#9633;</span><span class="bev">&#10005;</span></span></div>
+      <div class="body">
+        <div class="media"><video src="assets/lumo.mp4" poster="assets/lumo.webp" muted loop playsinline preload="none" aria-label="Lumo demo on a phone: signing in and posting a photo to the shared album"></video></div>
+        <div class="info">
+          <span class="kind">APP · FIREBASE</span>
+          <h3>Lumo</h3>
+          <p class="en">A shared photo album for an event: guests sign in and post photos, and nobody can delete them. Firestore security rules enforce it. One command runs it locally, and it ships as a Docker image.</p>
+          <p class="es">Un álbum de fotos compartido para un evento: los invitados entran y suben fotos, y nadie las puede borrar. Lo garantizan las reglas de seguridad de Firestore. Corre en local con un solo comando y viene como imagen de Docker.</p>
+          <ul class="chips"><li>React</li><li>TypeScript</li><li>Firebase</li><li>Firestore rules</li><li>Vite</li><li>Docker</li></ul>
+          <div class="btns"><a class="btn98 bev" href="https://github.com/andresazcona/Lumo"><span class="en">View code</span><span class="es">Ver código</span></a></div>
+        </div>
+      </div>
+    </article>
+
+    <h2 style="font-size:clamp(14px,2vw,18px); margin-top:72px"><span class="en">MORE ON GITHUB</span><span class="es">OTROS PROYECTOS</span></h2>
+    <div class="more" style="margin-top:28px">
+      <article class="win"><div class="bar"><span class="t">system-design-casebook</span></div><div class="body">
+        <p class="en">Six system design case studies with capacity math, ADRs and diagrams: URL shortener, clinic queue, IoT fleet, notifications, rate limiter and a document pipeline.</p>
+        <p class="es">Seis casos de diseño de sistemas con cálculos de capacidad, ADR y diagramas: acortador de URL, cola de clínica, flota IoT, notificaciones, rate limiter y un pipeline de documentos.</p>
+        <div class="btns"><a class="btn98 bev" href="https://github.com/andresazcona/system-design-casebook"><span class="en">View code</span><span class="es">Ver código</span></a></div></div></article>
+      <article class="win"><div class="bar"><span class="t">cost-sentinel</span></div><div class="body">
+        <p class="en">A weekly AWS waste report: a Lambda that finds forgotten EBS volumes, idle IPs, old snapshots and untagged resources. Dry-run by default.</p>
+        <p class="es">Un reporte semanal de desperdicio en AWS: una Lambda que encuentra volúmenes EBS olvidados, IP sin uso, snapshots viejos y recursos sin etiquetas. En modo simulación por defecto.</p>
+        <div class="btns"><a class="btn98 bev" href="https://github.com/andresazcona/cost-sentinel"><span class="en">View code</span><span class="es">Ver código</span></a></div></div></article>
+      <article class="win"><div class="bar"><span class="t">flatpdf</span></div><div class="body">
+        <p class="en">Flattens PDFs into image-only copies with a watermark per recipient: the text can't be copied and every leaked copy is traceable.</p>
+        <p class="es">Convierte PDF en copias de solo imagen con una marca de agua por destinatario: el texto no se puede copiar y cada copia filtrada se puede rastrear.</p>
+        <div class="btns"><a class="btn98 bev" href="https://github.com/andresazcona/flatpdf"><span class="en">View code</span><span class="es">Ver código</span></a></div></div></article>
+      <article class="win"><div class="bar"><span class="t">architecture-comparison</span></div><div class="body">
+        <p class="en">Monolith vs microservices on the same Node.js e-commerce app, load-tested with k6 for response time, throughput and fault tolerance.</p>
+        <p class="es">Monolito contra microservicios sobre la misma tienda en Node.js, con pruebas de carga en k6 de tiempo de respuesta, throughput y tolerancia a fallos.</p>
+        <div class="btns"><a class="btn98 bev" href="https://github.com/andresazcona/architecture-comparison"><span class="en">View code</span><span class="es">Ver código</span></a></div></div></article>
+      <article class="win"><div class="bar"><span class="t">IP-Tracker</span></div><div class="body">
+        <p class="en">Monitoring for devices on a network, with JWT auth, user roles and real-time updates. Light enough for a Raspberry Pi.</p>
+        <p class="es">Monitoreo de dispositivos en una red, con autenticación JWT, roles de usuario y actualización en tiempo real. Liviano para correr en una Raspberry Pi.</p>
+        <div class="btns"><a class="btn98 bev" href="https://github.com/andresazcona/IP-Tracker"><span class="en">View code</span><span class="es">Ver código</span></a></div></div></article>
+      <article class="win"><div class="bar"><span class="t">GeoFlux Sort</span></div><div class="body">
+        <p class="en">An adaptive, bidirectional sorting algorithm that groups similar values and moves them together, with a real-time visualization.</p>
+        <p class="es">Un algoritmo de ordenamiento adaptativo y bidireccional que agrupa valores parecidos y los mueve juntos, con visualización en tiempo real.</p>
+        <div class="btns"><a class="btn98 bev" href="https://github.com/andresazcona/geoflux_sorter_project"><span class="en">View code</span><span class="es">Ver código</span></a><a class="btn98 bev" href="https://medium.com/@andresazcona/geoflux-sort-a-bidirectional-adaptive-algorithm-for-natural-data-ordering-5dc8d625e0fd"><span class="en">Article</span><span class="es">Artículo</span></a></div></div></article>
     </div>
-    <div id="splash" class="px">
-      <div class="logo"><i style="background:#ff3b1f"></i><i style="background:#ff5fb0"></i><i style="background:#00d9d0"></i><i style="background:#ffb35c"></i></div>
-      <b>Makintoch<span> 97</span></b>
-      <div class="bar"></div>
-    </div>
-    <div id="boot" class="px"></div>
-    <div class="crt-fx"></div>
   </div>
-</div>
+</section>
+</main>
 
-<a id="cvlink" href="/cv/" onclick="event.stopPropagation()">CV / RESUME &gt;</a>
-
-<div id="title">
-  <div class="pre">ANDRESAZCONA PRESENTS</div>
-  <h1>RETRO.EXE</h1>
-  <div class="sub">A LATE-NIGHT HOMAGE TO<br>THE GAMES THAT RAISED US</div>
-  <div class="start">PRESS ENTER OR CLICK TO START</div>
-  <div class="fine">
-    DOS GAMES: SHAREWARE / FREEWARE EDITIONS VIA INTERNET ARCHIVE &middot; ALL GAMES &copy; THEIR RESPECTIVE OWNERS<br>
-    N64 ERA VIA ITCH.IO: SUPER CHUMPY (CAMPA T. DOG) &middot; JUMPY KART 64 &amp; PUMPKILL 64 (COSMIC RAYCAST) &middot; TOADALLY FLY (ELLIOTT DAHLE) &middot; RAT 64 (SYSL)<br>
-    HEXGL BY THIBAUT DESPOULAIN &middot; BANANABREAD (CUBE 2) BY MOZILLA &middot;
-    3D MAC: <a href="https://sketchfab.com/3d-models/macintosh-128k-896ea439b67b4606a23fb8b93be6af6d" target="_blank">KREEMS (CC BY)</a>
+<footer>
+  <div class="wrap">
+    <a class="px-btn" href="mailto:andres.azcona@outlook.com">andres.azcona@outlook.com</a>
+    <a href="https://www.linkedin.com/in/andresazcona">LinkedIn</a>
+    <a href="https://github.com/andresazcona">GitHub</a>
+    <a href="/cv/">CV</a>
+    <span>Bogotá, Colombia</span>
+    <span class="note"><a href="/retro/">RETRO.EXE &gt;</a></span>
   </div>
-</div>
-
-<div id="hud">
-  <h2 id="hudtitle">CONTROLS</h2>
-  <table id="hudkeys"></table>
-  <div class="tip" id="hudtip"></div>
-  <button id="view">[ LEAN BACK ]</button>
-</div>
+</footer>
 
 <script>
-  const AR = 'https://archive.org/embed/';
-  const IT = 'https://itch.io/embed-upload/';
-  // archive.org's download servers send no CORS headers, so we can't watch the real download.
-  // ponytail: wait = emulator boot + game zip size at a slow ~250 KB/s (measured from archive.org)
-  const dl = mb => 9000 + mb * 4000;
-  // default keys checked against each game's source code or manual
-  const GAMES = [
-    { sect:'DOS CLASSICS' },
-    { name:'DOOM',             tag:'DM', c:'#8b1a00', src:AR+'dosbox-doom', load:dl(2.4),
-      keys:[['&uarr; &darr;','MOVE'],['&larr; &rarr;','TURN'],['CTRL','FIRE'],['SPACE','USE / OPEN'],['SHIFT','RUN'],[', .','STRAFE'],['1-7','WEAPONS'],['ESC','MENU']] },
-    { name:'Wolfenstein 3D',   tag:'W3', c:'#5b5b5b', src:AR+'Wolfenstein3d', load:dl(0.7),
-      keys:[['&uarr; &darr;','MOVE'],['&larr; &rarr;','TURN'],['CTRL','FIRE'],['SPACE','OPEN'],['SHIFT','RUN'],['ALT+&larr;&rarr;','STRAFE'],['1-4','WEAPONS'],['ESC','MENU']] },
-    { name:'Heretic',          tag:'HR', c:'#3d6b2a', src:AR+'heretic-dos', load:dl(2.9),
-      keys:[['&uarr; &darr;','MOVE'],['&larr; &rarr;','TURN'],['CTRL','FIRE'],['SPACE','USE / OPEN'],['SHIFT','RUN'],['ALT+&larr;&rarr;','STRAFE'],['[ ]','PICK ITEM'],['ENTER','USE ITEM'],['ESC','MENU']] },
-    { name:'Commander Keen 4', tag:'CK', c:'#c0392b', src:AR+'msdos_Commander_Keen_4_-_Secret_of_the_Oracle_1991', load:dl(0.6),
-      keys:[['ARROWS','MOVE / LOOK'],['CTRL','JUMP'],['ALT','POGO'],['SPACE','SHOOT'],['ENTER','STATUS'],['ESC','MENU']] },
-    { name:'Duke Nukem II',    tag:'D2', c:'#b8860b', src:AR+'duke-nukem2-sw', load:dl(1.1),
-      keys:[['ARROWS','MOVE'],['CTRL','JUMP'],['ALT','FIRE'],['ESC','MENU']] },
-    { name:'Raptor',           tag:'RP', c:'#1f4e8c', src:AR+'Raptor-sw1', load:dl(1.9),
-      keys:[['ARROWS','FLY'],['CTRL','FIRE'],['ALT','SPECIAL WEAPON'],['SPACE','SWITCH SPECIAL'],['R-SHIFT','MEGA BOMB'],['ESC','MENU']] },
-    { name:'Epic Pinball',     tag:'EP', c:'#d35400', src:AR+'Epic-pinball-sw1', load:dl(0.7),
-      keys:[['L-SHIFT','LEFT FLIPPER'],['R-SHIFT','RIGHT FLIPPER'],['SPACE','HOLD + RELEASE: LAUNCH'],['Z  /','NUDGE'],['ESC','MENU']] },
-    // original indie games from itch.io, embedded with the authors' own embed builds (itch shows its own loader)
-    { sect:'N64 ERA' },
-    { name:'Super Chumpy',     tag:'SC', c:'#c8641e', src:IT+'16630476', load:1200,
-      keys:[['W A S D','MOVE'],['SPACE','JUMP (x3)'],['SHIFT','RUN'],['F','INSPECT'],['MOUSE / IJKL','CAMERA']] },
-    { name:'Jumpy Kart 64',    tag:'JK', c:'#d62b2b', src:IT+'7496594', load:1200,
-      keys:[['ENTER','START'],['W A S D','DRIVE'],['SPACE','JUMP (x2)'],['SHIFT','HANDBRAKE / SPIN'],['F','ATTACK'],['ARROWS','CAMERA']] },
-    { name:'PUMPKILL 64',      tag:'PK', c:'#e8742a', src:IT+'8982789', load:1200,
-      keys:[['W A S D','MOVE'],['MOUSE','AIM'],['L-CLICK','FIRE'],['SPACE','JUMP'],['SHIFT','RUN'],['CTRL / C','CROUCH / SLIDE']] },
-    { name:'Toadally Fly',     tag:'TF', c:'#3aa04a', src:IT+'5742947', load:1200,
-      keys:[['W A S D','MOVE'],['MOUSE','LOOK'],['SPACE','JUMP (x2)'],['L-CLICK','TONGUE'],['SHIFT','SPRINT']] },
-    { name:'Rat 64',           tag:'R6', c:'#7a5cc4', src:IT+'16886315', load:1200,
-      keys:[['W A S D','MOVE'],['MOUSE','CAMERA'],['SPACE','JUMP'],['SHIFT','RUN'],['E','FOCUS CAMERA']] },
-    { sect:'3D' },
-    { name:'Magic Carpet',     tag:'MC', c:'#a0522d', src:AR+'MAGIC_20140815', load:dl(3.2) + 12000,
-      keys:[['MOUSE','STEER / ALTITUDE'],['&uarr;','FLY (TAP = FASTER)'],['&darr;','REVERSE'],['L / R-CLICK','CAST SPELLS'],['1-0','LEFT SPELL'],['ENTER','SPELLS'],['P','PAUSE']] },
-    { name:'HexGL',            tag:'HX', c:'#e67e22', src:'https://hexgl.bkcore.com/play/', load:4000,
-      keys:[['&uarr;','ACCELERATE'],['&darr;','BRAKE'],['&larr; &rarr;','STEER'],['A / Q','LEFT AIRBRAKE'],['D / E','RIGHT AIRBRAKE']] },
-    { name:'Cube 2',           tag:'C2', c:'#2c3e50', src:'https://kripken.github.io/BananaBread/cube2/bb.html', load:8000,
-      // show only the game canvas: the page is laid out centered, canvas at (0,83) 642x482 when the frame is 642 wide
-      crop:{ fw:642, fh:565, x:0, y:83, w:642, h:482 },
-      keys:[['W A S D','MOVE'],['MOUSE','LOOK'],['L-CLICK','FIRE'],['SPACE','JUMP'],['1-5','WEAPONS'],['TAB','SCORES']] },
-  ];
-
-  const $ = id => document.getElementById(id);
-  const world = $('world'), title = $('title'), hud = $('hud'), boot = $('boot'), splash = $('splash');
-  const win = $('win'), wbody = $('wbody'), loader = $('loader');
-  const tile = g => `<span class="tile" style="background:${g.c}">${g.tag}</span>`;
-
-  // desktop icons + start menu
-  $('icons').innerHTML = GAMES.map((g, i) => g.sect
-    ? `<div class="sect">${g.sect}</div>`
-    : `<div class="ico" tabindex="0" data-i="${i}">${tile(g)}<span class="lbl">${g.name}</span></div>`).join('');
-  $('smitems').innerHTML = GAMES.map((g, i) => g.sect
-    ? `<div class="hd">${g.sect}</div>`
-    : `<div class="it" data-i="${i}">${tile(g)}${g.name}</div>`).join('');
-  document.querySelectorAll('[data-i]').forEach(el => el.addEventListener('click', () => openGame(GAMES[el.dataset.i])));
-
-  // ---------- camera ----------
-  const W = 1600, H = 1000;
-  const VIEW = { pc: { x: 718, y: 296, w: 253, h: 208 } };   // glass + a hair of bezel, in world px
-  let mode = 'room', started = false;
-  function place(){
-    const cw = innerWidth, ch = innerHeight;
-    const cover = Math.max(cw / W, ch / H);
-    let s = cover, cx = W / 2, cy = H / 2;
-    if (mode === 'pc'){
-      const v = VIEW.pc;
-      s = Math.max(cover, Math.min(cw / v.w, ch / v.h) * 0.96);
-      cx = v.x + v.w / 2; cy = v.y + v.h / 2;
+  // language: shared with /cv/ so both pages stay in the same one
+  (function () {
+    var root = document.documentElement, btn = document.getElementById('lang'), saved;
+    try { saved = localStorage.getItem('cv.lang'); } catch (e) {}
+    var lang = saved || ((navigator.language || '').toLowerCase().indexOf('es') === 0 ? 'es' : 'en');
+    function set(l) {
+      lang = l; root.lang = l;
+      btn.textContent = l === 'es' ? 'EN' : 'ES';
+      btn.setAttribute('aria-label', l === 'es' ? 'Switch to English' : 'Cambiar a español');
+      try { localStorage.setItem('cv.lang', l); } catch (e) {}
     }
-    const tx = Math.min(0, Math.max(cw - W * s, cw / 2 - cx * s));
-    const ty = Math.min(0, Math.max(ch - H * s, ch / 2 - cy * s));
-    world.style.transform = `translate(${tx}px,${ty}px) scale(${s})`;
-  }
-  addEventListener('resize', () => { world.style.transition = 'none'; place(); world.offsetWidth; world.style.transition = ''; });
-  place();
-
-  // ---------- HUD ----------
-  function setHud(g){
-    $('hudtitle').textContent = g ? g.name.toUpperCase() : 'MAKINTOCH 97';
-    $('hudkeys').innerHTML = (g ? g.keys : [['CLICK','OPEN A GAME'],['START','GAME MENU']])
-      .map(([k, a]) => `<tr><td>${k}</td><td>${a}</td></tr>`).join('');
-    $('hudtip').innerHTML = g ? 'CLICK THE GAME<br>TO GRAB THE KEYBOARD' : 'PICK A GAME FROM<br>THE DESKTOP';
-  }
-
-  // ---------- windows ----------
-  let loadTimer;
-  function openGame(g){
-    closeGame();
-    $('startmenu').classList.remove('open'); $('startbtn').classList.remove('down');
-    $('wtitle').textContent = g.name;
-    $('ltext').textContent = 'Loading ' + g.name + '...';
-    const bar = $('lprog'); bar.style.animation = 'none'; bar.offsetWidth; bar.style.animation = `fill ${g.load}ms linear forwards`;
-    loader.classList.remove('off');
-    const f = document.createElement('iframe');
-    f.src = g.src;
-    f.allow = 'autoplay; fullscreen; pointer-lock; gamepad';
-    f.allowFullscreen = true;
-    win.classList.add('open');   // must be laid out to measure the body
-    if (g.crop){
-      const c = g.crop, bw = wbody.clientWidth, bh = wbody.clientHeight;
-      const k = Math.min(bw / c.w, bh / c.h);
-      Object.assign(f.style, { width: c.fw + 'px', height: c.fh + 'px', inset: 'auto', transformOrigin: '0 0',
-        transform: `translate(${(bw - c.w * k) / 2 - c.x * k}px,${(bh - c.h * k) / 2 - c.y * k}px) scale(${k})` });
-    }
-    wbody.appendChild(f);
-    // some games swallow the click (preventDefault on mousedown), so the frame never gets keyboard focus; hand it over
-    const focusGame = () => { try { f.contentWindow.focus(); } catch (e) {} };
-    f.addEventListener('load', focusGame);
-    f.addEventListener('mouseover', focusGame);
-    // ponytail: fixed per-game delay; the cross-origin frame can't tell us when it's ready
-    loadTimer = setTimeout(() => { loader.classList.add('off'); focusGame(); }, g.load);
-    win.classList.add('open');
-    $('task').style.display = ''; $('task').innerHTML = tile(g) + g.name;
-    setHud(g);
-  }
-  function closeGame(){
-    clearTimeout(loadTimer);
-    wbody.querySelector('iframe')?.remove();
-    win.classList.remove('open');
-    $('task').style.display = 'none';
-    setHud(null);
-  }
-  $('wclose').addEventListener('click', closeGame);
-  $('wmax').addEventListener('click', () => wbody.querySelector('iframe')?.requestFullscreen?.());
-  $('startbtn').addEventListener('click', e => {
-    e.stopPropagation();
-    $('startmenu').classList.toggle('open'); $('startbtn').classList.toggle('down');
-  });
-  $('desk').addEventListener('click', e => {
-    if (!e.target.closest('#startmenu')){ $('startmenu').classList.remove('open'); $('startbtn').classList.remove('down'); }
-  });
-  (function tick(){
-    $('clock').textContent = new Date().toLocaleTimeString([], { hour:'numeric', minute:'2-digit' });
-    setTimeout(tick, 15000);
+    btn.onclick = function () { set(lang === 'es' ? 'en' : 'es'); };
+    set(lang);
   })();
 
-  // ---------- boot sequence ----------
-  const LINES = ['Starting MAKINTOCH 97...', '', 'HIMEM is testing extended memory...done.', 'C:\\> WIN'];
-  function typeBoot(done){
-    let i = 0;
-    (function next(){
-      if (i >= LINES.length) return done();
-      boot.innerHTML = LINES.slice(0, ++i).join('\n') + '<span class="cur"></span>';
-      setTimeout(next, 450);
-    })();
-  }
-  function start(){
-    if (started) return;
-    started = true;
-    title.classList.add('off');
-    world.classList.remove('dim');
-    setTimeout(() => { mode = 'pc'; place(); }, 700);
-    setTimeout(() => typeBoot(() => {
-      boot.classList.add('off');
-      splash.classList.add('on');
-      setTimeout(() => {
-        splash.classList.remove('on'); setHud(null); hud.classList.add('on');
-        // opacity:0 alone left a ghost of the splash on some GPUs; drop the layers entirely
-        setTimeout(() => { splash.remove(); boot.remove(); }, 800);
-      }, 2600);
-    }), 1400);
-  }
-  title.addEventListener('click', start);
-  addEventListener('keydown', e => { if (!started && (e.key === 'Enter' || e.key === ' ')){ e.preventDefault(); start(); } });
-
-  $('view').addEventListener('click', () => {
-    mode = mode === 'pc' ? 'room' : 'pc';
-    $('view').textContent = mode === 'pc' ? '[ LEAN BACK ]' : '[ LEAN IN ]';
-    place();
-  });
+  // demos play only while on screen; with reduced motion they wait for a click
+  (function () {
+    var vids = document.querySelectorAll('video');
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      vids.forEach(function (v) { v.controls = true; });
+      return;
+    }
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { e.isIntersecting ? e.target.play().catch(function () {}) : e.target.pause(); });
+    }, { threshold: 0.35 });
+    vids.forEach(function (v) { io.observe(v); });
+  })();
 </script>
 </body>
 </html>
