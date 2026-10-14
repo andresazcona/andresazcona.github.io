@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Andres Azcona — Software Architect & Engineer</title>
-<meta name="description" content="Andres Azcona: software architect and engineer in Bogotá. Cloud (AWS, Terraform, Kubernetes), backend and systems design.">
-<meta property="og:title" content="Andres Azcona — Software Architect & Engineer">
-<meta property="og:description" content="Cloud, backend and systems design. Projects, stack and contact.">
+<title>Andres Azcona — Full Stack & Cloud Software Engineer</title>
+<meta name="description" content="Andres Azcona: Full Stack & Cloud Software Engineer in Bogotá. Java/Spring Boot, .NET, Node.js/React, cloud architecture and CI/CD on AWS and Azure, cybersecurity.">
+<meta property="og:title" content="Andres Azcona — Full Stack & Cloud Software Engineer">
+<meta property="og:description" content="Experience, projects, certifications and contact.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230d0221'/><text x='16' y='22' font-family='monospace' font-size='16' font-weight='700' fill='%2300d9d0' text-anchor='middle'>AA</text></svg>">
 <style>
   :root {
@@ -58,6 +58,10 @@
   .item ul { grid-column: 1 / -1; margin: 6px 0 0; padding-left: 18px; font-size: 14.5px; }
 
   .two { display: grid; grid-template-columns: 1.3fr 1fr; gap: 28px; }
+  .tagline { margin: 4px 0 0; font-size: 13.5px; color: var(--muted); }
+  .lead { grid-column: 1 / -1; margin: 6px 0 0; font-size: 14.5px; }
+  .more { font-size: 14px; margin: 10px 0 0; }
+  .two .certs { grid-template-columns: 1fr; }
   .certs { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 6px 28px; }
   .certs li { display: flex; flex-direction: column; font-size: 14.5px; break-inside: avoid; }
   .certs .ci { font: 12px var(--mono); color: var(--muted); }
@@ -83,7 +87,10 @@
     h1 { font-size: 30px; }
     section { margin-top: 18px; }
     .project { padding: 8px 10px; }
-    .project p, .item ul, .plain, .summary p, .certs li { font-size: 11.5px; }
+    .project p, .item ul, .plain, .summary p, .certs li, .lead, .more, .tagline { font-size: 11px; }
+    .item ul { margin-top: 3px; }
+    h2 { break-after: avoid; }
+    .item ul li { margin: 0; }
     .certs .ci { font-size: 10px; }
     .badges { font-size: 11px; }
     .project h3, .item h3 { font-size: 13px; }
@@ -111,61 +118,82 @@
   <header class="top">
     <div>
       <h1>Andres Azcona</h1>
-      <p class="role">Software Architect &amp; Engineer · Cloud · Backend · Systems design</p>
+      <p class="role"><span class="en">Full Stack &amp; Cloud Software Engineer</span><span class="es">Ingeniero de Software Full Stack y Cloud</span></p>
+      <p class="tagline">Java/Spring Boot · .NET · Node.js/React · <span class="en">Cloud Architecture &amp; CI/CD (AWS, Azure) · Cybersecurity</span><span class="es">Arquitectura cloud y CI/CD (AWS, Azure) · Ciberseguridad</span></p>
     </div>
     <ul class="contact">
       <li>Bogotá, Colombia</li>
       <li><a href="mailto:andres.azcona@outlook.com">andres.azcona@outlook.com</a></li>
-      <li><a href="https://github.com/andresazcona">github.com/andresazcona</a></li>
       <li><a href="https://linkedin.com/in/andresazcona">linkedin.com/in/andresazcona</a></li>
+      <li><a href="https://github.com/andresazcona">github.com/andresazcona</a></li>
     </ul>
   </header>
 
   <section class="summary">
-    <h2><span class="en">Profile</span><span class="es">Perfil</span></h2>
-    <p class="en">I design and build software from sketch to production. I start by drawing the system and the reasons behind it, write the backend and the frontend, get it live with CI/CD, containers and AWS, and keep it observable once it runs.</p>
-    <p class="es">Diseño y construyo software desde el boceto hasta producción. Empiezo dibujando el sistema y las razones detrás de cada pieza, escribo el backend y el frontend, lo llevo a producción con CI/CD, contenedores y AWS, y lo mantengo observable una vez está corriendo.</p>
+    <h2><span class="en">About</span><span class="es">Perfil</span></h2>
+    <p class="en">Software engineering is where my passion lives. I specialize in two things, deeply connected: building robust software and designing the cloud architectures that let it run at scale. Working across Java/Spring Boot, .NET and Node.js/Express, and applying proven design patterns, I turn complex requirements into systems that are secure, maintainable and built to last, from multi-tenant applications to CI/CD-driven pipelines on AWS and Azure. Day to day, I modernize delivery pipelines, introduce observability where there was none and design systems that hold up under real production load, always with an eye on security and long-term maintainability.</p>
+    <p class="es">La ingeniería de software es donde vive mi pasión. Me especializo en dos cosas muy conectadas: construir software robusto y diseñar las arquitecturas cloud que le permiten correr a escala. Trabajo con Java/Spring Boot, .NET y Node.js/Express, y aplico patrones de diseño probados para convertir requerimientos complejos en sistemas seguros, mantenibles y hechos para durar, desde aplicaciones multi-tenant hasta pipelines de CI/CD en AWS y Azure. En el día a día modernizo pipelines de entrega, llevo observabilidad a donde no la había y diseño sistemas que aguantan carga real en producción, siempre pensando en la seguridad y la mantenibilidad a largo plazo.</p>
   </section>
 
   <section>
     <h2><span class="en">Experience</span><span class="es">Experiencia</span></h2>
     <div class="item">
       <h3>Technical Lead</h3><span class="when"><span class="en">Apr 2026 – present</span><span class="es">abr 2026 – hoy</span></span>
-      <div class="org"><span class="en">Technology company · Bogotá</span><span class="es">Empresa de tecnología · Bogotá</span></div>
+      <div class="org"><span class="en">Technology company · Bogotá · Hybrid</span><span class="es">Empresa de tecnología · Bogotá · Híbrido</span></div>
+      <p class="lead en">I define and drive the company's technical vision, ensuring that software architecture is scalable, resilient and aligned with business goals.</p>
+      <p class="lead es">Defino y dirijo la visión técnica de la empresa, asegurando que la arquitectura de software sea escalable, resiliente y alineada con los objetivos del negocio.</p>
       <ul class="en">
-        <li>Lead architecture and solution design for web platforms, desktop applications and monitoring systems.</li>
-        <li>Run cloud deployments on AWS and Azure with Docker, Kubernetes (AKS), Helm and Argo CD; Lambda, Lightsail and IAM.</li>
-        <li>Coordinate the engineering team: GitFlow, Jira and GitHub integration, pull request reviews and mentoring.</li>
-        <li>Oversee full-stack work in React, Node.js, Express, Electron and Python, and production monitoring with Sentry.</li>
+        <li>Lead architecture and solution design for web platforms, desktop applications and monitoring systems, selecting stacks, infrastructure and design patterns for long-term sustainability.</li>
+        <li>Coordinate engineering teams with GitFlow and deep Jira and GitHub integrations; keep code quality through structured pull request reviews and continuous mentorship.</li>
+        <li>Manage high-availability deployments on AWS and Azure with Docker, Kubernetes and AKS; CI/CD with Helm and Argo CD; AWS Lambda, Lightsail and IAM.</li>
+        <li>Oversee full-stack development in React, Node.js, Express, Electron and Python, plus analytics with Power BI and machine learning with Pandas and classification models.</li>
+        <li>Run monitoring and observability with Sentry for rapid issue detection and reduced downtime.</li>
       </ul>
       <ul class="es">
-        <li>Lidero la arquitectura y el diseño de soluciones de plataformas web, aplicaciones de escritorio y sistemas de monitoreo.</li>
-        <li>Opero despliegues en AWS y Azure con Docker, Kubernetes (AKS), Helm y Argo CD; Lambda, Lightsail e IAM.</li>
-        <li>Coordino al equipo de ingeniería: GitFlow, integración de Jira y GitHub, revisión de pull requests y mentoría.</li>
-        <li>Superviso el desarrollo full-stack en React, Node.js, Express, Electron y Python, y el monitoreo en producción con Sentry.</li>
+        <li>Lidero la arquitectura y el diseño de soluciones de plataformas web, aplicaciones de escritorio y sistemas de monitoreo, eligiendo stacks, infraestructura y patrones de diseño pensados a largo plazo.</li>
+        <li>Coordino equipos de ingeniería con GitFlow e integraciones profundas de Jira y GitHub; mantengo la calidad del código con revisiones estructuradas de pull requests y mentoría continua.</li>
+        <li>Gestiono despliegues de alta disponibilidad en AWS y Azure con Docker, Kubernetes y AKS; CI/CD con Helm y Argo CD; AWS Lambda, Lightsail e IAM.</li>
+        <li>Superviso el desarrollo full-stack en React, Node.js, Express, Electron y Python, además de analítica con Power BI y machine learning con Pandas y modelos de clasificación.</li>
+        <li>Opero el monitoreo y la observabilidad con Sentry para detectar fallas rápido y reducir el tiempo fuera de servicio.</li>
       </ul>
     </div>
     <div class="item">
       <h3><span class="en">Software Developer</span><span class="es">Desarrollador de software</span></h3><span class="when"><span class="en">Jan 2025 – Jul 2025</span><span class="es">ene 2025 – jul 2025</span></span>
-      <div class="org">Sofka Technologies</div>
-      <ul class="en"><li>Backend development with Express and Spring Boot, applying design patterns, clean architecture and careful API design.</li></ul>
-      <ul class="es"><li>Desarrollo backend con Express y Spring Boot, aplicando patrones de diseño, arquitectura limpia y diseño cuidadoso de APIs.</li></ul>
+      <div class="org">Sofka Technologies · <span class="en">Contract · Remote</span><span class="es">Contrato · Remoto</span></div>
+      <ul class="en"><li>Backend development with Express and Spring Boot, applying proven design patterns to build robust, scalable and maintainable systems; clean architecture, efficient API design and seamless integration across services.</li></ul>
+      <ul class="es"><li>Desarrollo backend con Express y Spring Boot, aplicando patrones de diseño probados para construir sistemas robustos, escalables y mantenibles; arquitectura limpia, diseño eficiente de APIs e integración fluida entre servicios.</li></ul>
     </div>
     <div class="item">
       <h3><span class="en">Full-stack Web Developer</span><span class="es">Desarrollador web full-stack</span></h3><span class="when"><span class="en">Jan 2024 – Jan 2025</span><span class="es">ene 2024 – ene 2025</span></span>
-      <div class="org">Crossover</div>
-      <ul class="en"><li>Web applications with Node.js, Express and React: RESTful APIs, SQL and NoSQL databases, and security practices.</li></ul>
-      <ul class="es"><li>Aplicaciones web con Node.js, Express y React: APIs REST, bases de datos SQL y NoSQL, y prácticas de seguridad.</li></ul>
+      <div class="org">Crossover · <span class="en">Remote</span><span class="es">Remoto</span></div>
+      <ul class="en"><li>High-performance web applications with Node.js, Express and React, focused on system efficiency and data security: RESTful APIs, SQL and NoSQL databases (including Firebase) and advanced security practices.</li></ul>
+      <ul class="es"><li>Aplicaciones web de alto rendimiento con Node.js, Express y React, enfocadas en eficiencia y seguridad de los datos: APIs REST, bases de datos SQL y NoSQL (incluido Firebase) y prácticas avanzadas de seguridad.</li></ul>
+    </div>
+    <div class="item">
+      <h3><span class="en">Operations Manager · Operations Supervisor · Customer Care</span><span class="es">Gerente de operaciones · Supervisor · Servicio al cliente</span></h3><span class="when"><span class="en">Nov 2022 – May 2024</span><span class="es">nov 2022 – may 2024</span></span>
+      <div class="org">Teleperformance · <span class="en">Remote</span><span class="es">Remoto</span></div>
+      <ul class="en"><li>As POC, led the optimization of customer care operations: agent team performance, training programs and KPI analysis; worked with technology and quality teams to optimize call routing.</li></ul>
+      <ul class="es"><li>Como POC, lideré la optimización de la operación de servicio al cliente: desempeño del equipo, programas de capacitación y análisis de KPI; trabajé con los equipos de tecnología y calidad para optimizar el enrutamiento de llamadas.</li></ul>
     </div>
     <div class="item">
       <h3><span class="en">Web Developer</span><span class="es">Desarrollador web</span></h3><span class="when"><span class="en">Oct 2022 – Feb 2023</span><span class="es">oct 2022 – feb 2023</span></span>
-      <div class="org">M&amp;M IT Consulting SAS</div>
+      <div class="org">M&amp;M IT Consulting SAS · Murfreesboro, TN, USA · <span class="en">Remote</span><span class="es">Remoto</span></div>
     </div>
+  </section>
+
+  <section>
+    <h2><span class="en">Education</span><span class="es">Educación</span></h2>
     <div class="item">
-      <h3><span class="en">Operations: agent, supervisor and manager</span><span class="es">Operaciones: agente, supervisor y gerente</span></h3><span class="when"><span class="en">Nov 2022 – May 2024</span><span class="es">nov 2022 – may 2024</span></span>
-      <div class="org">Teleperformance · Bogotá</div>
-      <ul class="en"><li>Led customer care teams, training programs and KPI analysis, and worked with technology teams on call routing.</li></ul>
-      <ul class="es"><li>Lideré equipos de servicio al cliente, programas de capacitación y análisis de KPI, y trabajé con tecnología en el enrutamiento de llamadas.</li></ul>
+      <h3><span class="en">Informatics Engineering</span><span class="es">Ingeniería Informática</span></h3><span class="when"><span class="en">Jan 2023 – Mar 2028</span><span class="es">ene 2023 – mar 2028</span></span>
+      <div class="org">Universidad de La Sabana · <span class="en">Grade 4/5 · IEEE RAS &amp; IAS, Applied Robotics Unisabana</span><span class="es">Promedio 4/5 · IEEE RAS &amp; IAS, Semillero de Robótica Aplicada</span></div>
+      <ul class="en">
+        <li>Represented the university at RoboCup Rescue 2026 with the applied robotics group, working hands-on with ROS, URDF and Raspberry Pi-based systems.</li>
+        <li>Won SabanaHack 2025, the university hackathon, building and shipping a working solution against the clock.</li>
+      </ul>
+      <ul class="es">
+        <li>Representé a la universidad en RoboCup Rescue 2026 con el semillero de robótica aplicada, trabajando con ROS, URDF y sistemas basados en Raspberry Pi.</li>
+        <li>Gané SabanaHack 2025, el hackathon de la universidad, construyendo y entregando una solución funcional contra reloj.</li>
+      </ul>
     </div>
   </section>
 
@@ -174,103 +202,71 @@
     <div class="projects">
       <article class="project">
         <h3><a href="https://github.com/andresazcona/sqlhelper-platform">sqlhelper-platform</a></h3>
-        <p class="en">Production AWS platform in Terraform: CloudFront + S3, ECS Fargate behind an internal ALB, blue/green with CodeDeploy, three environments, no NAT gateway.</p>
-        <p class="es">Plataforma de producción en AWS con Terraform: CloudFront + S3, ECS Fargate detrás de un ALB interno, azul/verde con CodeDeploy, tres ambientes, sin NAT gateway.</p>
-        <div class="tech">Terraform · ECS · CloudFront · CodeDeploy · OIDC</div>
+        <p class="en">Production AWS platform in Terraform: CloudFront, ECS Fargate behind an internal ALB, blue/green with CodeDeploy, three environments.</p>
+        <p class="es">Plataforma de producción en AWS con Terraform: CloudFront, ECS Fargate detrás de un ALB interno, azul/verde con CodeDeploy, tres ambientes.</p>
       </article>
       <article class="project">
         <h3><a href="https://github.com/andresazcona/aws-landing-zone">aws-landing-zone</a></h3>
-        <p class="en">Multi-account landing zone: Organizations, SCP guardrails, central logging, delegated security services and Identity Center.</p>
-        <p class="es">Landing zone multi-cuenta: Organizations, guardrails con SCP, logging central, servicios de seguridad delegados e Identity Center.</p>
-        <div class="tech">Terraform · Organizations · SCP · GuardDuty · terraform test</div>
+        <p class="en">Multi-account landing zone: Organizations, SCP guardrails, central logging, delegated security services, Identity Center.</p>
+        <p class="es">Landing zone multi-cuenta: Organizations, guardrails con SCP, logging central, servicios de seguridad delegados, Identity Center.</p>
       </article>
       <article class="project">
         <h3><a href="https://github.com/andresazcona/k8s-gitops-platform">k8s-gitops-platform</a></h3>
-        <p class="en">Four microservices on Kubernetes with Helm and Argo CD (app-of-apps), traced and measured with OpenTelemetry, Prometheus, Grafana and Tempo, with SLO alerts.</p>
-        <p class="es">Cuatro microservicios en Kubernetes con Helm y Argo CD (app-of-apps), con trazas y métricas en OpenTelemetry, Prometheus, Grafana y Tempo, y alertas de SLO.</p>
-        <div class="tech">Kubernetes · Helm · Argo CD · OpenTelemetry · kind</div>
+        <p class="en">Microservices on Kubernetes with Helm and Argo CD, OpenTelemetry, Prometheus, Grafana and SLO alerts.</p>
+        <p class="es">Microservicios en Kubernetes con Helm y Argo CD, OpenTelemetry, Prometheus, Grafana y alertas de SLO.</p>
       </article>
       <article class="project">
         <h3><a href="https://github.com/andresazcona/Folio">Folio</a></h3>
-        <p class="en">Chat with your PDFs where every answer cites its page. Hybrid retrieval, works with no API key, optional Claude, OpenAI or Ollama, streamed answers.</p>
-        <p class="es">Chat con tus PDF donde cada respuesta cita su página. Recuperación híbrida, funciona sin llave de API, Claude, OpenAI u Ollama opcionales, respuestas en streaming.</p>
-        <div class="tech">FastAPI · React · PostgreSQL · SSE · Docker</div>
-      </article>
-      <article class="project">
-        <h3><a href="https://github.com/andresazcona/system-design-casebook">system-design-casebook</a></h3>
-        <p class="en">Six system design case studies with capacity math, architecture decision records and diagrams.</p>
-        <p class="es">Seis casos de diseño de sistemas con cálculo de capacidad, registros de decisiones de arquitectura y diagramas.</p>
-        <div class="tech">Architecture · ADRs · draw.io</div>
-      </article>
-      <article class="project">
-        <h3><a href="https://github.com/andresazcona/cost-sentinel">cost-sentinel</a></h3>
-        <p class="en">Weekly AWS waste report: a Lambda that finds forgotten volumes, idle IPs, old snapshots and untagged resources. Dry-run by default.</p>
-        <p class="es">Reporte semanal de desperdicio en AWS: una Lambda que encuentra volúmenes olvidados, IPs sin uso, snapshots viejos y recursos sin etiquetas. Modo simulación por defecto.</p>
-        <div class="tech">Python · Lambda · EventBridge · moto</div>
+        <p class="en">Chat with your PDFs where every answer cites its page. FastAPI, React, hybrid retrieval, works without an API key.</p>
+        <p class="es">Chat con tus PDF donde cada respuesta cita su página. FastAPI, React, recuperación híbrida, funciona sin llave de API.</p>
       </article>
     </div>
-    <p class="en" style="font-size:14px;margin:12px 0 0">More on <a href="https://github.com/andresazcona">GitHub</a>: Lumo (event photo album on Firebase), SQLhelper (SQL to ER diagrams), flatpdf, architecture-comparison.</p>
-    <p class="es" style="font-size:14px;margin:12px 0 0">Más en <a href="https://github.com/andresazcona">GitHub</a>: Lumo (álbum de fotos para eventos en Firebase), SQLhelper (de SQL a diagramas ER), flatpdf, architecture-comparison.</p>
+    <p class="more en">More on <a href="https://github.com/andresazcona">GitHub</a>: system-design-casebook, cost-sentinel, Lumo, SQLhelper, flatpdf.</p>
+    <p class="more es">Más en <a href="https://github.com/andresazcona">GitHub</a>: system-design-casebook, cost-sentinel, Lumo, SQLhelper, flatpdf.</p>
   </section>
 
   <section>
     <h2><span class="en">Skills</span><span class="es">Habilidades</span></h2>
     <dl class="skills">
-      <dt>Cloud &amp; IaC</dt>
-      <dd><span>AWS</span><span>Terraform</span><span>Azure</span><span>Google Cloud</span><span>ECS / Fargate</span><span>Lambda</span><span>CloudFront</span><span>Organizations</span></dd>
-      <dt><span class="en">Platform</span><span class="es">Plataforma</span></dt>
-      <dd><span>Docker</span><span>Kubernetes</span><span>Helm</span><span>Argo CD</span><span>GitHub Actions</span><span>OpenTelemetry</span><span>Prometheus</span><span>Grafana</span></dd>
       <dt>Backend</dt>
-      <dd><span>Node.js / TypeScript</span><span>Python / FastAPI</span><span>Java</span><span>Go</span><span>REST</span><span>GraphQL</span></dd>
+      <dd><span>Java / Spring Boot</span><span>.NET</span><span>Node.js / Express</span><span>Python</span><span>REST APIs</span><span>Design patterns</span></dd>
       <dt>Frontend</dt>
-      <dd><span>React</span><span>Vite</span><span>Firebase</span></dd>
+      <dd><span>React</span><span>Electron</span><span>Firebase</span></dd>
+      <dt>Cloud &amp; DevOps</dt>
+      <dd><span>AWS</span><span>Azure / AKS</span><span>Terraform</span><span>Docker</span><span>Kubernetes</span><span>Helm</span><span>Argo CD</span><span>CI/CD</span><span>GitFlow</span></dd>
       <dt><span class="en">Data</span><span class="es">Datos</span></dt>
-      <dd><span>PostgreSQL</span><span>MongoDB</span><span>SQL</span><span>Prisma</span></dd>
-      <dt><span class="en">Security</span><span class="es">Seguridad</span></dt>
-      <dd><span>OAuth 2.0 / OIDC</span><span>JWT</span><span>Checkov</span><span>Trivy</span><span>SAST</span></dd>
-      <dt>QA</dt>
-      <dd><span>Playwright</span><span>Selenium</span><span>Vitest / Jest</span><span>pytest</span><span>k6</span><span>Postman</span></dd>
-      <dt><span class="en">Infrastructure</span><span class="es">Infraestructura</span></dt>
-      <dd><span>Linux</span><span>Proxmox VE</span><span>Windows Server</span><span>Networking / VLANs</span><span>Tailscale</span><span>Cloudflare</span></dd>
+      <dd><span>SQL / MySQL</span><span>NoSQL</span><span>Power BI</span><span>Pandas</span></dd>
+      <dt><span class="en">Security &amp; networks</span><span class="es">Seguridad y redes</span></dt>
+      <dd><span>Cybersecurity</span><span>IAM</span><span>TCP/IP</span><span>Cisco IOS</span><span>Linux</span></dd>
+      <dt><span class="en">Reliability</span><span class="es">Confiabilidad</span></dt>
+      <dd><span>Sentry</span><span>OpenTelemetry</span><span>Prometheus / Grafana</span></dd>
+      <dt><span class="en">Leadership</span><span class="es">Liderazgo</span></dt>
+      <dd><span class="en">Technical project leadership</span><span class="es">Liderazgo de proyectos técnicos</span><span class="en">Code review &amp; mentoring</span><span class="es">Revisión de código y mentoría</span><span>Jira</span><span>Agile / Scrum</span></dd>
     </dl>
   </section>
 
   <section class="two">
     <div>
-      <h2><span class="en">Education</span><span class="es">Educación</span></h2>
-      <div class="item">
-        <h3><span class="en">Informatics Engineering</span><span class="es">Ingeniería Informática</span></h3><span class="when">2023 – 2028</span>
-        <div class="org">Universidad de La Sabana</div>
-        <ul class="en"><li>In progress, eighth semester.</li><li>Represented the university at RoboCup Rescue 2026 with its applied robotics research group (ROS, Raspberry Pi).</li></ul>
-        <ul class="es"><li>En curso, octavo semestre.</li><li>Representé a la universidad en RoboCup Rescue 2026 con su semillero de robótica aplicada (ROS, Raspberry Pi).</li></ul>
-      </div>
+      <h2><span class="en">Certifications</span><span class="es">Certificaciones</span></h2>
+      <ul class="certs">
+        <li><span class="cn"><a href="https://www.credly.com/badges/79ee1820-f584-4b43-aa3f-542bca629a56">AWS Academy Graduate — Cloud Architecting</a></span><span class="ci">Amazon Web Services · 2026</span></li>
+        <li><span class="cn"><a href="https://www.coursera.org/account/accomplishments/specialization/MHQFRB6SZONQ">Ciberseguridad de Google</a></span><span class="ci">Google · Coursera · 2026</span></li>
+        <li><span class="cn"><a href="https://coursera.org/verify/RM3K2DFRCOU9">Fundamentos de la Ciberseguridad</a></span><span class="ci">Google · Coursera · 2025</span></li>
+        <li><span class="cn"><a href="https://www.credly.com/badges/49e9450a-ef0e-411b-8f78-81fa61506d5d">Cisco Network Technician</a></span><span class="ci">Cisco Networking Academy · 2025</span></li>
+        <li><span class="cn"><a href="https://www.hackerrank.com/certificates/6282fdf1069c">Software Engineer Intern</a></span><span class="ci">HackerRank · 2025</span></li>
+        <li><span class="cn">Profesional Developer · Database Analyst · Principios de IA · Digital Product Management · Digital Mindset</span><span class="ci">Digital House · 2024</span></li>
+      </ul>
+      <p class="badges en">Also on <a href="https://www.credly.com/users/andres-azcona.10d72d21">Credly</a>: Cisco Linux Unhatched, Introduction to IoT, Networking Basics, Network Support and Security, Introduction to Packet Tracer and more.</p>
+      <p class="badges es">También en <a href="https://www.credly.com/users/andres-azcona.10d72d21">Credly</a>: Cisco Linux Unhatched, Introduction to IoT, Networking Basics, Network Support and Security, Introduction to Packet Tracer y más.</p>
     </div>
     <div>
       <h2><span class="en">Languages</span><span class="es">Idiomas</span></h2>
       <ul class="plain">
-        <li><span class="en">Spanish — native</span><span class="es">Español — nativo</span></li>
+        <li><span class="en">Spanish — native or bilingual</span><span class="es">Español — nativo o bilingüe</span></li>
         <li><span class="en">English — native or bilingual</span><span class="es">Inglés — nativo o bilingüe</span></li>
         <li><span class="en">Portuguese — elementary</span><span class="es">Portugués — básico</span></li>
       </ul>
     </div>
-  </section>
-
-  <section>
-    <h2><span class="en">Certifications</span><span class="es">Certificaciones</span></h2>
-    <ul class="certs">
-        <li><span class="cn"><a href="https://www.credly.com/badges/79ee1820-f584-4b43-aa3f-542bca629a56">AWS Academy Graduate — Cloud Architecting</a></span><span class="ci">Amazon Web Services · 2026</span></li>
-        <li><span class="cn"><a href="https://www.coursera.org/account/accomplishments/specialization/MHQFRB6SZONQ">Ciberseguridad de Google (Google Cybersecurity)</a></span><span class="ci">Google · Coursera · 2026</span></li>
-        <li><span class="cn"><a href="https://coursera.org/verify/RM3K2DFRCOU9">Fundamentos de la Ciberseguridad</a></span><span class="ci">Google · Coursera · 2025</span></li>
-        <li><span class="cn"><a href="https://www.credly.com/badges/49e9450a-ef0e-411b-8f78-81fa61506d5d">Cisco Network Technician</a></span><span class="ci">Cisco Networking Academy · 2025</span></li>
-        <li><span class="cn"><a href="https://www.hackerrank.com/certificates/6282fdf1069c">Software Engineer Intern</a></span><span class="ci">HackerRank · 2025</span></li>
-        <li><span class="cn">Database Analyst</span><span class="ci">Digital House · 2024</span></li>
-        <li><span class="cn">Principios de Inteligencia Artificial</span><span class="ci">Digital House · 2024</span></li>
-        <li><span class="cn">Digital Product Management</span><span class="ci">Digital House · 2024</span></li>
-        <li><span class="cn">Digital Mindset</span><span class="ci">Digital House · 2024</span></li>
-        <li><span class="cn">Profesional Developer</span><span class="ci">Digital House · 2024</span></li>
-    </ul>
-    <p class="badges en">Also on <a href="https://www.credly.com/users/andres-azcona.10d72d21">Credly</a> (Cisco Networking Academy): Linux Unhatched, Introduction to IoT (2026); Networking Basics, Network Addressing and Basic Troubleshooting, Networking Devices and Initial Configuration, Network Support and Security, Introduction to Packet Tracer (2025).</p>
-    <p class="badges es">También en <a href="https://www.credly.com/users/andres-azcona.10d72d21">Credly</a> (Cisco Networking Academy): Linux Unhatched, Introduction to IoT (2026); Networking Basics, Network Addressing and Basic Troubleshooting, Networking Devices and Initial Configuration, Network Support and Security, Introduction to Packet Tracer (2025).</p>
   </section>
 
   <footer>
