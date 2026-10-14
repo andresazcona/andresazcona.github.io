@@ -27,14 +27,18 @@
   .wrap{ width:min(1100px, 100% - 32px); margin:0 auto; }
 
   /* ---------- nav ---------- */
-  .nav{ position:fixed; inset:0 0 auto; z-index:50; background:var(--panel); backdrop-filter:blur(6px); border-bottom:2px solid var(--red); }
-  .nav .wrap{ display:flex; align-items:center; gap:18px; height:56px; }
+  /* transparent over the hero; a thin frosted bar once you scroll (like nordmar-kitchens) */
+  .nav{ position:fixed; inset:0 0 auto; z-index:50; transition:background .4s, backdrop-filter .4s; }
+  .nav .wrap{ width:auto; display:flex; align-items:center; gap:26px; height:76px; padding:0 clamp(16px, 4vw, 48px); transition:height .4s; }
+  .nav.solid{ background:rgba(8,2,20,.55); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); }
+  .nav.solid .wrap{ height:56px; }
   .logo{ display:flex; align-items:center; gap:10px; color:var(--cream); text-decoration:none; font:10px var(--pixel); letter-spacing:1px; margin-right:auto; }
   .logo i{ display:grid; grid-template-columns:7px 7px; gap:2px; transform:skewY(-6deg); }
   .logo i b{ width:7px; height:6px; display:block; }
-  .nav a.l{ color:var(--cream); text-decoration:none; font:9px var(--pixel); letter-spacing:1px; }
-  .nav a.l:hover, .nav a.l:focus-visible{ color:var(--cyan); }
-  .nav button{ font:9px var(--pixel); color:var(--bg); background:var(--cyan); border:0; padding:7px 8px; cursor:pointer; box-shadow:2px 2px 0 #003b38; }
+  .nav a.l{ color:#fff; opacity:.8; text-decoration:none; font:9px var(--pixel); letter-spacing:1px; transition:opacity .2s, color .2s; }
+  .nav a.l:hover, .nav a.l:focus-visible{ opacity:1; color:var(--cyan); }
+  .nav button{ font:9px var(--pixel); color:#fff; opacity:.8; background:transparent; border:1px solid currentColor; padding:6px 7px; cursor:pointer; transition:opacity .2s, color .2s; }
+  .nav button:hover, .nav button:focus-visible{ opacity:1; color:var(--cyan); }
   @media (max-width:640px){ .nav .hide-sm{ display:none; } .logo span{ display:none; } }
 
   /* ---------- hero: the RETRO.EXE room, dimmed like its title screen ---------- */
@@ -276,6 +280,14 @@
     }
     btn.onclick = function () { set(lang === 'es' ? 'en' : 'es'); };
     set(lang);
+  })();
+
+  // nav turns into a frosted bar after the first bit of scroll
+  (function () {
+    var nav = document.querySelector('.nav');
+    function upd() { nav.classList.toggle('solid', scrollY > 40); }
+    addEventListener('scroll', upd, { passive: true });
+    upd();
   })();
 
   // demos play only while on screen; with reduced motion they wait for a click
