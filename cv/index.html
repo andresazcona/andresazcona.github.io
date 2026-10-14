@@ -58,6 +58,9 @@
   .item ul { grid-column: 1 / -1; margin: 6px 0 0; padding-left: 18px; font-size: 14.5px; }
 
   .two { display: grid; grid-template-columns: 1.3fr 1fr; gap: 28px; }
+  .certs { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 6px 28px; }
+  .certs li { display: flex; flex-direction: column; font-size: 14.5px; break-inside: avoid; }
+  .certs .ci { font: 12px var(--mono); color: var(--muted); }
   .plain { list-style: none; margin: 0; padding: 0; font-size: 14.5px; display: grid; gap: 4px; }
 
   footer { margin-top: 30px; padding-top: 14px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
@@ -68,7 +71,7 @@
     .contact { text-align: left; }
     .skills { grid-template-columns: 1fr; }
     .skills dt { margin-top: 6px; }
-    .projects, .two { grid-template-columns: 1fr; }
+    .projects, .two, .certs { grid-template-columns: 1fr; }
     .bar .hide-sm { display: none; }
   }
   @media print {
@@ -79,7 +82,8 @@
     h1 { font-size: 30px; }
     section { margin-top: 18px; }
     .project { padding: 8px 10px; }
-    .project p, .item ul, .plain, .summary p { font-size: 11.5px; }
+    .project p, .item ul, .plain, .summary p, .certs li { font-size: 11.5px; }
+    .certs .ci { font-size: 10px; }
     .project h3, .item h3 { font-size: 13px; }
     .skills { gap: 4px 12px; grid-template-columns: 120px 1fr; }
     .skills dt { font-size: 11.5px; }
@@ -240,21 +244,29 @@
       </div>
     </div>
     <div>
-      <h2><span class="en">Certifications</span><span class="es">Certificaciones</span></h2>
-      <ul class="plain">
-        <li>AWS Academy Graduate — Cloud Architecting</li>
-        <li>Learn Responsive Design</li>
-        <li>Learn JavaScript</li>
-        <li>Web Designer</li>
-        <li>Principios de Inteligencia Artificial</li>
-      </ul>
-      <h2 style="margin-top:18px"><span class="en">Languages</span><span class="es">Idiomas</span></h2>
+      <h2><span class="en">Languages</span><span class="es">Idiomas</span></h2>
       <ul class="plain">
         <li><span class="en">Spanish — native</span><span class="es">Español — nativo</span></li>
         <li><span class="en">English — native or bilingual</span><span class="es">Inglés — nativo o bilingüe</span></li>
         <li><span class="en">Portuguese — elementary</span><span class="es">Portugués — básico</span></li>
       </ul>
     </div>
+  </section>
+
+  <section>
+    <h2><span class="en">Certifications</span><span class="es">Certificaciones</span></h2>
+    <ul class="certs">
+        <li><span class="cn"><a href="https://www.credly.com/badges/79ee1820-f584-4b43-aa3f-542bca629a56">AWS Academy Graduate — Cloud Architecting</a></span><span class="ci">Amazon Web Services · 2026</span></li>
+        <li><span class="cn"><a href="https://www.coursera.org/account/accomplishments/specialization/MHQFRB6SZONQ">Ciberseguridad de Google (Google Cybersecurity)</a></span><span class="ci">Google · Coursera · 2026</span></li>
+        <li><span class="cn"><a href="https://coursera.org/verify/RM3K2DFRCOU9">Fundamentos de la Ciberseguridad</a></span><span class="ci">Google · Coursera · 2025</span></li>
+        <li><span class="cn"><a href="https://www.credly.com/badges/49e9450a-ef0e-411b-8f78-81fa61506d5d">Cisco Network Technician</a></span><span class="ci">Cisco Networking Academy · 2025</span></li>
+        <li><span class="cn"><a href="https://www.hackerrank.com/certificates/6282fdf1069c">Software Engineer Intern</a></span><span class="ci">HackerRank · 2025</span></li>
+        <li><span class="cn">Database Analyst</span><span class="ci">Digital House · 2024</span></li>
+        <li><span class="cn">Principios de Inteligencia Artificial</span><span class="ci">Digital House · 2024</span></li>
+        <li><span class="cn">Digital Product Management</span><span class="ci">Digital House · 2024</span></li>
+        <li><span class="cn">Digital Mindset</span><span class="ci">Digital House · 2024</span></li>
+        <li><span class="cn">Profesional Developer</span><span class="ci">Digital House · 2024</span></li>
+    </ul>
   </section>
 
   <footer>
