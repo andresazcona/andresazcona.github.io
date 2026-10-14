@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Andres Azcona — Software Architect & Engineer</title>
+<meta name="description" content="Andres Azcona: software architect and engineer in Bogotá. Cloud (AWS, Terraform, Kubernetes), backend and systems design.">
+<meta property="og:title" content="Andres Azcona — Software Architect & Engineer">
+<meta property="og:description" content="Cloud, backend and systems design. Projects, stack and contact.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230d0221'/><text x='16' y='22' font-family='monospace' font-size='16' font-weight='700' fill='%2300d9d0' text-anchor='middle'>AA</text></svg>">
+<style>
+  :root {
+    --bg: #f6f4fb; --paper: #ffffff; --ink: #17122b; --muted: #645d7c; --line: #e4e0ef;
+    --accent: #6a1fb0; --accent-2: #008f89; --chip: #f1ecfa;
+    --mono: ui-monospace, "Cascadia Code", "SF Mono", Consolas, monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 15.5px/1.6 var(--sans); }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  [lang="es"] .en, [lang="en"] .es { display: none; }
+
+  .bar { position: sticky; top: 0; z-index: 2; display: flex; justify-content: space-between; align-items: center; gap: 12px;
+         padding: 10px 16px; background: #0d0221; color: #e9e3ff; font: 13px var(--mono); }
+  .bar a { color: #00d9d0; }
+  .bar .actions { display: flex; gap: 8px; }
+  .bar button { font: inherit; color: #0d0221; background: #00d9d0; border: 0; border-radius: 6px; padding: 6px 12px; cursor: pointer; font-weight: 700; }
+  .bar button.ghost { background: transparent; color: #e9e3ff; border: 1px solid #3b2a66; }
+
+  main { max-width: 900px; margin: 28px auto 60px; padding: 44px 48px; background: var(--paper); border: 1px solid var(--line); border-radius: 16px; }
+  header.top { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; padding-bottom: 22px; border-bottom: 2px solid var(--ink); }
+  h1 { margin: 0; font-size: 38px; line-height: 1.05; letter-spacing: -.5px; }
+  .role { margin: 8px 0 0; font: 600 15px var(--mono); color: var(--accent); letter-spacing: .3px; }
+  .contact { list-style: none; margin: 0; padding: 0; font-size: 14px; display: grid; gap: 3px; text-align: right; }
+  .contact span { color: var(--muted); }
+
+  section { margin-top: 28px; }
+  h2 { margin: 0 0 12px; font: 700 12px var(--mono); text-transform: uppercase; letter-spacing: 2px; color: var(--accent-2); }
+  .summary p { margin: 0 0 8px; font-size: 16.5px; }
+
+  .skills { display: grid; grid-template-columns: 170px 1fr; gap: 8px 18px; margin: 0; }
+  .skills dt { font-weight: 700; font-size: 14px; }
+  .skills dd { margin: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+  .skills dd span { background: var(--chip); border-radius: 6px; padding: 1px 9px; font-size: 13.5px; }
+
+  .projects { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .project { border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; break-inside: avoid; }
+  .project h3 { margin: 0 0 4px; font-size: 16px; }
+  .project p { margin: 0 0 8px; font-size: 14px; color: #332c4d; }
+  .project .tech { font: 12px var(--mono); color: var(--muted); }
+
+  .item { display: grid; grid-template-columns: 1fr auto; gap: 2px 16px; margin-bottom: 14px; break-inside: avoid; }
+  .item h3 { margin: 0; font-size: 16px; }
+  .item .when { font: 13px var(--mono); color: var(--muted); }
+  .item .org { color: var(--muted); font-size: 14px; }
+  .item ul { grid-column: 1 / -1; margin: 6px 0 0; padding-left: 18px; font-size: 14.5px; }
+
+  .two { display: grid; grid-template-columns: 1.3fr 1fr; gap: 28px; }
+  .plain { list-style: none; margin: 0; padding: 0; font-size: 14.5px; display: grid; gap: 4px; }
+
+  footer { margin-top: 30px; padding-top: 14px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+
+  @media (max-width: 720px) {
+    main { margin: 0; padding: 28px 16px 40px; border: 0; border-radius: 0; }
+    h1 { font-size: 30px; }
+    .contact { text-align: left; }
+    .skills { grid-template-columns: 1fr; }
+    .skills dt { margin-top: 6px; }
+    .projects, .two { grid-template-columns: 1fr; }
+    .bar .hide-sm { display: none; }
+  }
+  @media print {
+    @page { size: A4; margin: 14mm; }
+    body { background: #fff; font-size: 12.5px; }
+    .bar, footer .no-print { display: none; }
+    main { margin: 0; padding: 0; border: 0; max-width: none; }
+    h1 { font-size: 30px; }
+    section { margin-top: 18px; }
+    .project { padding: 8px 10px; }
+    .project p, .item ul, .plain, .summary p { font-size: 11.5px; }
+    .project h3, .item h3 { font-size: 13px; }
+    .skills { gap: 4px 12px; grid-template-columns: 120px 1fr; }
+    .skills dt { font-size: 11.5px; }
+    .skills dd span { font-size: 11px; padding: 0 6px; }
+    .item { margin-bottom: 8px; }
+    .projects { gap: 8px; }
+    header.top { padding-bottom: 12px; flex-wrap: nowrap; }
+    .contact { font-size: 11.5px; white-space: nowrap; }
+    a { color: var(--ink); }
+  }
+</style>
+</head>
+<body>
+<div class="bar">
+  <a href="/">&larr; <span class="en">RETRO.EXE (the fun version)</span><span class="es">RETRO.EXE (la versión divertida)</span></a>
+  <div class="actions">
+    <button class="ghost" id="lang" aria-label="Language">ES</button>
+    <button onclick="print()"><span class="en">Download PDF</span><span class="es">Descargar PDF</span></button>
+  </div>
+</div>
+
+<main>
+  <header class="top">
+    <div>
+      <h1>Andres Azcona</h1>
+      <p class="role">Software Architect &amp; Engineer · Cloud · Backend · Systems design</p>
+    </div>
+    <ul class="contact">
+      <li>Bogotá, Colombia</li>
+      <li><a href="mailto:andres.azcona@outlook.com">andres.azcona@outlook.com</a></li>
+      <li><a href="https://github.com/andresazcona">github.com/andresazcona</a></li>
+      <li><a href="https://linkedin.com/in/andresazcona">linkedin.com/in/andresazcona</a></li>
+    </ul>
+  </header>
+
+  <section class="summary">
+    <h2><span class="en">Profile</span><span class="es">Perfil</span></h2>
+    <p class="en">I design and build software from sketch to production. I start by drawing the system and the reasons behind it, write the backend and the frontend, get it live with CI/CD, containers and AWS, and keep it observable once it runs.</p>
+    <p class="es">Diseño y construyo software desde el boceto hasta producción. Empiezo dibujando el sistema y las razones detrás de cada pieza, escribo el backend y el frontend, lo llevo a producción con CI/CD, contenedores y AWS, y lo mantengo observable una vez está corriendo.</p>
+  </section>
+
+  <section>
+    <h2><span class="en">Experience</span><span class="es">Experiencia</span></h2>
+    <div class="item">
+      <h3>Technical Lead</h3><span class="when"><span class="en">Apr 2026 – present</span><span class="es">abr 2026 – hoy</span></span>
+      <div class="org"><span class="en">Technology company · Bogotá</span><span class="es">Empresa de tecnología · Bogotá</span></div>
+      <ul class="en">
+        <li>Lead architecture and solution design for web platforms, desktop applications and monitoring systems.</li>
+        <li>Run cloud deployments on AWS and Azure with Docker, Kubernetes (AKS), Helm and Argo CD; Lambda, Lightsail and IAM.</li>
+        <li>Coordinate the engineering team: GitFlow, Jira and GitHub integration, pull request reviews and mentoring.</li>
+        <li>Oversee full-stack work in React, Node.js, Express, Electron and Python, and production monitoring with Sentry.</li>
+      </ul>
+      <ul class="es">
+        <li>Lidero la arquitectura y el diseño de soluciones de plataformas web, aplicaciones de escritorio y sistemas de monitoreo.</li>
+        <li>Opero despliegues en AWS y Azure con Docker, Kubernetes (AKS), Helm y Argo CD; Lambda, Lightsail e IAM.</li>
+        <li>Coordino al equipo de ingeniería: GitFlow, integración de Jira y GitHub, revisión de pull requests y mentoría.</li>
+        <li>Superviso el desarrollo full-stack en React, Node.js, Express, Electron y Python, y el monitoreo en producción con Sentry.</li>
+      </ul>
+    </div>
+    <div class="item">
+      <h3><span class="en">Software Developer</span><span class="es">Desarrollador de software</span></h3><span class="when"><span class="en">Jan 2025 – Jul 2025</span><span class="es">ene 2025 – jul 2025</span></span>
+      <div class="org">Sofka Technologies</div>
+      <ul class="en"><li>Backend development with Express and Spring Boot, applying design patterns, clean architecture and careful API design.</li></ul>
+      <ul class="es"><li>Desarrollo backend con Express y Spring Boot, aplicando patrones de diseño, arquitectura limpia y diseño cuidadoso de APIs.</li></ul>
+    </div>
+    <div class="item">
+      <h3><span class="en">Full-stack Web Developer</span><span class="es">Desarrollador web full-stack</span></h3><span class="when"><span class="en">Jan 2024 – Jan 2025</span><span class="es">ene 2024 – ene 2025</span></span>
+      <div class="org">Crossover</div>
+      <ul class="en"><li>Web applications with Node.js, Express and React: RESTful APIs, SQL and NoSQL databases, and security practices.</li></ul>
+      <ul class="es"><li>Aplicaciones web con Node.js, Express y React: APIs REST, bases de datos SQL y NoSQL, y prácticas de seguridad.</li></ul>
+    </div>
+    <div class="item">
+      <h3><span class="en">Web Developer</span><span class="es">Desarrollador web</span></h3><span class="when"><span class="en">Oct 2022 – Feb 2023</span><span class="es">oct 2022 – feb 2023</span></span>
+      <div class="org">M&amp;M IT Consulting SAS</div>
+    </div>
+    <div class="item">
+      <h3><span class="en">Operations: agent, supervisor and manager</span><span class="es">Operaciones: agente, supervisor y gerente</span></h3><span class="when"><span class="en">Nov 2022 – May 2024</span><span class="es">nov 2022 – may 2024</span></span>
+      <div class="org">Teleperformance · Bogotá</div>
+      <ul class="en"><li>Led customer care teams, training programs and KPI analysis, and worked with technology teams on call routing.</li></ul>
+      <ul class="es"><li>Lideré equipos de servicio al cliente, programas de capacitación y análisis de KPI, y trabajé con tecnología en el enrutamiento de llamadas.</li></ul>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="en">Selected projects</span><span class="es">Proyectos destacados</span></h2>
+    <div class="projects">
+      <article class="project">
+        <h3><a href="https://github.com/andresazcona/sqlhelper-platform">sqlhelper-platform</a></h3>
+        <p class="en">Production AWS platform in Terraform: CloudFront + S3, ECS Fargate behind an internal ALB, blue/green with CodeDeploy, three environments, no NAT gateway.</p>
+        <p class="es">Plataforma de producción en AWS con Terraform: CloudFront + S3, ECS Fargate detrás de un ALB interno, azul/verde con CodeDeploy, tres ambientes, sin NAT gateway.</p>
+        <div class="tech">Terraform · ECS · CloudFront · CodeDeploy · OIDC</div>
+      </article>
+      <article class="project">
+        <h3><a href="https://github.com/andresazcona/aws-landing-zone">aws-landing-zone</a></h3>
+        <p class="en">Multi-account landing zone: Organizations, SCP guardrails, central logging, delegated security services and Identity Center.</p>
+        <p class="es">Landing zone multi-cuenta: Organizations, guardrails con SCP, logging central, servicios de seguridad delegados e Identity Center.</p>
+        <div class="tech">Terraform · Organizations · SCP · GuardDuty · terraform test</div>
+      </article>
+      <article class="project">
+        <h3><a href="https://github.com/andresazcona/k8s-gitops-platform">k8s-gitops-platform</a></h3>
+        <p class="en">Four microservices on Kubernetes with Helm and Argo CD (app-of-apps), traced and measured with OpenTelemetry, Prometheus, Grafana and Tempo, with SLO alerts.</p>
+        <p class="es">Cuatro microservicios en Kubernetes con Helm y Argo CD (app-of-apps), con trazas y métricas en OpenTelemetry, Prometheus, Grafana y Tempo, y alertas de SLO.</p>
+        <div class="tech">Kubernetes · Helm · Argo CD · OpenTelemetry · kind</div>
+      </article>
+      <article class="project">
+        <h3><a href="https://github.com/andresazcona/Folio">Folio</a></h3>
+        <p class="en">Chat with your PDFs where every answer cites its page. Hybrid retrieval, works with no API key, optional Claude, OpenAI or Ollama, streamed answers.</p>
+        <p class="es">Chat con tus PDF donde cada respuesta cita su página. Recuperación híbrida, funciona sin llave de API, Claude, OpenAI u Ollama opcionales, respuestas en streaming.</p>
+        <div class="tech">FastAPI · React · PostgreSQL · SSE · Docker</div>
+      </article>
+      <article class="project">
+        <h3><a href="https://github.com/andresazcona/system-design-casebook">system-design-casebook</a></h3>
+        <p class="en">Six system design case studies with capacity math, architecture decision records and diagrams.</p>
+        <p class="es">Seis casos de diseño de sistemas con cálculo de capacidad, registros de decisiones de arquitectura y diagramas.</p>
+        <div class="tech">Architecture · ADRs · draw.io</div>
+      </article>
+      <article class="project">
+        <h3><a href="https://github.com/andresazcona/cost-sentinel">cost-sentinel</a></h3>
+        <p class="en">Weekly AWS waste report: a Lambda that finds forgotten volumes, idle IPs, old snapshots and untagged resources. Dry-run by default.</p>
+        <p class="es">Reporte semanal de desperdicio en AWS: una Lambda que encuentra volúmenes olvidados, IPs sin uso, snapshots viejos y recursos sin etiquetas. Modo simulación por defecto.</p>
+        <div class="tech">Python · Lambda · EventBridge · moto</div>
+      </article>
+    </div>
+    <p class="en" style="font-size:14px;margin:12px 0 0">More on <a href="https://github.com/andresazcona">GitHub</a>: Lumo (event photo album on Firebase), SQLhelper (SQL to ER diagrams), flatpdf, architecture-comparison.</p>
+    <p class="es" style="font-size:14px;margin:12px 0 0">Más en <a href="https://github.com/andresazcona">GitHub</a>: Lumo (álbum de fotos para eventos en Firebase), SQLhelper (de SQL a diagramas ER), flatpdf, architecture-comparison.</p>
+  </section>
+
+  <section>
+    <h2><span class="en">Skills</span><span class="es">Habilidades</span></h2>
+    <dl class="skills">
+      <dt>Cloud &amp; IaC</dt>
+      <dd><span>AWS</span><span>Terraform</span><span>Azure</span><span>Google Cloud</span><span>ECS / Fargate</span><span>Lambda</span><span>CloudFront</span><span>Organizations</span></dd>
+      <dt><span class="en">Platform</span><span class="es">Plataforma</span></dt>
+      <dd><span>Docker</span><span>Kubernetes</span><span>Helm</span><span>Argo CD</span><span>GitHub Actions</span><span>OpenTelemetry</span><span>Prometheus</span><span>Grafana</span></dd>
+      <dt>Backend</dt>
+      <dd><span>Node.js / TypeScript</span><span>Python / FastAPI</span><span>Java</span><span>Go</span><span>REST</span><span>GraphQL</span></dd>
+      <dt>Frontend</dt>
+      <dd><span>React</span><span>Vite</span><span>Firebase</span></dd>
+      <dt><span class="en">Data</span><span class="es">Datos</span></dt>
+      <dd><span>PostgreSQL</span><span>MongoDB</span><span>SQL</span><span>Prisma</span></dd>
+      <dt><span class="en">Security</span><span class="es">Seguridad</span></dt>
+      <dd><span>OAuth 2.0 / OIDC</span><span>JWT</span><span>Checkov</span><span>Trivy</span><span>SAST</span></dd>
+      <dt>QA</dt>
+      <dd><span>Playwright</span><span>Selenium</span><span>Vitest / Jest</span><span>pytest</span><span>k6</span><span>Postman</span></dd>
+      <dt><span class="en">Infrastructure</span><span class="es">Infraestructura</span></dt>
+      <dd><span>Linux</span><span>Proxmox VE</span><span>Windows Server</span><span>Networking / VLANs</span><span>Tailscale</span><span>Cloudflare</span></dd>
+    </dl>
+  </section>
+
+  <section class="two">
+    <div>
+      <h2><span class="en">Education</span><span class="es">Educación</span></h2>
+      <div class="item">
+        <h3><span class="en">Informatics Engineering</span><span class="es">Ingeniería Informática</span></h3><span class="when">2023 – 2028</span>
+        <div class="org">Universidad de La Sabana</div>
+        <ul class="en"><li>In progress, eighth semester.</li><li>Represented the university at RoboCup Rescue 2026 with its applied robotics research group (ROS, Raspberry Pi).</li></ul>
+        <ul class="es"><li>En curso, octavo semestre.</li><li>Representé a la universidad en RoboCup Rescue 2026 con su semillero de robótica aplicada (ROS, Raspberry Pi).</li></ul>
+      </div>
+    </div>
+    <div>
+      <h2><span class="en">Certifications</span><span class="es">Certificaciones</span></h2>
+      <ul class="plain">
+        <li>AWS Academy Graduate — Cloud Architecting</li>
+        <li>Learn Responsive Design</li>
+        <li>Learn JavaScript</li>
+        <li>Web Designer</li>
+        <li>Principios de Inteligencia Artificial</li>
+      </ul>
+      <h2 style="margin-top:18px"><span class="en">Languages</span><span class="es">Idiomas</span></h2>
+      <ul class="plain">
+        <li><span class="en">Spanish — native</span><span class="es">Español — nativo</span></li>
+        <li><span class="en">English — native or bilingual</span><span class="es">Inglés — nativo o bilingüe</span></li>
+        <li><span class="en">Portuguese — elementary</span><span class="es">Portugués — básico</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    <span>Andres Azcona · <span class="en">Updated October 2026</span><span class="es">Actualizado en octubre de 2026</span></span>
+    <span class="no-print"><a href="/">RETRO.EXE</a> · <a href="https://github.com/andresazcona">GitHub</a></span>
+  </footer>
+</main>
+
+<script>
+  (function () {
+    var root = document.documentElement, btn = document.getElementById('lang');
+    var saved = null;
+    try { saved = localStorage.getItem('cv.lang'); } catch (e) {}
+    var lang = saved || ((navigator.language || '').toLowerCase().indexOf('es') === 0 ? 'es' : 'en');
+    function set(l) {
+      lang = l; root.lang = l; btn.textContent = l === 'es' ? 'EN' : 'ES';
+      try { localStorage.setItem('cv.lang', l); } catch (e) {}
+    }
+    btn.onclick = function () { set(lang === 'es' ? 'en' : 'es'); };
+    set(lang);
+  })();
+</script>
+</body>
+</html>

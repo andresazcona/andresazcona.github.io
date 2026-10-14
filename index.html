@@ -114,6 +114,13 @@
   #loader .prog i{ display:block; height:100%; width:0; background:repeating-linear-gradient(90deg,#000080 0 9px,transparent 9px 11px); }
   #loader .hint{ margin-top:8px; color:#444; font-size:10px; }
 
+  /* ---------- link to the plain CV ---------- */
+  #cvlink{
+    position:fixed; top:14px; right:14px; z-index:120; font-size:9px; letter-spacing:1px; color:#00d9d0; text-decoration:none;
+    background:rgba(8,2,20,.8); border:2px solid #00d9d0; box-shadow:3px 3px 0 #003b38; padding:8px 10px;
+  }
+  #cvlink:hover{ background:#00d9d0; color:#0d0221; }
+
   /* ---------- title screen ---------- */
   #title{
     position:fixed; inset:0; z-index:100; display:flex; flex-direction:column; align-items:center; justify-content:center;
@@ -192,6 +199,8 @@
     <div class="crt-fx"></div>
   </div>
 </div>
+
+<a id="cvlink" href="/cv/" onclick="event.stopPropagation()">CV / RESUME &#9656;</a>
 
 <div id="title">
   <div class="pre">ANDRESAZCONA PRESENTS</div>
